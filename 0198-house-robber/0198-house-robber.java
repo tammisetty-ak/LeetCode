@@ -1,13 +1,28 @@
 class Solution {
-    public int rob(int[] nums) {
-        int rob1 = 0, rob2 = 0;
 
-        for(int num: nums){
-            int temp = Math.max(num + rob1, rob2);
-            rob1 = rob2;
-            rob2 = temp;
+    private int[] memo;
+
+    public int rob(int[] nums) {
+
+        this.memo = new int[100];
+
+        Arrays.fill(this.memo, -1);
+
+        return this.robFrom(0, nums);
+    }
+
+    private int robFrom(int i, int[] nums) {
+        if (i >= nums.length){
+            return 0;
         }
 
-        return rob2;
+        if(this.memo[i] > -1) {
+            return this.memo[i];
+        }
+
+        int ans = Math.max(this.robFrom(i+1, nums), this.robFrom(i + 2, nums) + nums[i]);
+
+        this.memo[i] = ans;
+        return ans;
     }
 }
