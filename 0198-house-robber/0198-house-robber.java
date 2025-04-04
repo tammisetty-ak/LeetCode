@@ -1,28 +1,20 @@
 class Solution {
-
-    private int[] memo;
-
     public int rob(int[] nums) {
+        int N = nums.length;
 
-        this.memo = new int[100];
-
-        Arrays.fill(this.memo, -1);
-
-        return this.robFrom(0, nums);
-    }
-
-    private int robFrom(int i, int[] nums) {
-        if (i >= nums.length){
+        if(N == 0) {
             return 0;
         }
 
-        if(this.memo[i] > -1) {
-            return this.memo[i];
+        int[] maxRobbedAmount = new int[N + 1];
+
+        maxRobbedAmount[N] = 0;
+        maxRobbedAmount[N-1] = nums[N-1];
+
+        for(int i = N - 2; i >= 0; --i) {
+            maxRobbedAmount[i] = Math.max(maxRobbedAmount[i + 1], maxRobbedAmount[i + 2] + nums[i]);
         }
+            return maxRobbedAmount[0];
 
-        int ans = Math.max(this.robFrom(i+1, nums), this.robFrom(i + 2, nums) + nums[i]);
-
-        this.memo[i] = ans;
-        return ans;
     }
 }
