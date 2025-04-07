@@ -4,13 +4,17 @@ class Solution {
 
         boolean[][] dp = new boolean[n][n];
 
+        int res = 0;
+
         for(int i = 0; i < n; i++) {
             dp[i][i] = true;
+            res++;
         }
 
         for(int i = 0; i < n - 1; i++) {
             if(s.charAt(i) == s.charAt(i + 1)) {
                 dp[i][i + 1] = true;
+                res++;
             }
         }
 
@@ -20,20 +24,10 @@ class Solution {
 
                 if(s.charAt(j) == s.charAt(i) && dp[i + 1][j - 1]) {
                     dp[i][j] = true;
-                }
-            }
-        }
-
-        int res = 0;
-
-        for(int i = 0; i < n; i++) {
-            for(int j = 0; j < n; j++) {
-                if(dp[i][j]){
                     res++;
                 }
             }
         }
-
         return res;
     }
 }
