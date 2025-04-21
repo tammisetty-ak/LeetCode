@@ -5,7 +5,7 @@ class Solution {
     public int threeSumClosest(int[] nums, int target) {
         Arrays.sort(nums);
 
-        for (int i = 0; i < nums.length && diff != 0; i++) {
+        for (int i = 0; i < nums.length; i++) {
             twoSumII(nums, i, target);
         }
 
