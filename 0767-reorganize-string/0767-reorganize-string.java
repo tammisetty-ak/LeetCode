@@ -1,49 +1,51 @@
 class Solution {
     public String reorganizeString(String s) {
-        int[] charCount = new int[26];
+        
+        int[] charCounts = new int[26];
 
-        for(int i =0 ; i < s.length(); i++) {
-            charCount[s.charAt(i) - 'a']++;
+        for(Character c: s.toCharArray()) {
+            charCounts[c - 'a']++;
         }
 
-        PriorityQueue<int[]> minHeap = new PriorityQueue<int[]>((a, b) -> {
+        PriorityQueue<int[]> maxHeap = new PriorityQueue<int[]>((a, b) -> {
             return Integer.compare(b[1], a[1]);
         });
 
         for(int i = 0; i < 26; i++) {
-            if(charCount[i] > 0) {
-                minHeap.offer(new int[] { i + 'a', charCount[i]});
+            if(charCounts[i] > 0) {
+                maxHeap.offer(new int[] {i + 'a', charCounts[i]});
             }
         }
 
         StringBuilder sb = new StringBuilder();
 
-        while(!minHeap.isEmpty()) {
-            int[] first = minHeap.poll();
+        while(!maxHeap.isEmpty()) {
+            int[] first = maxHeap.poll();
 
             if(sb.length() == 0 || sb.charAt(sb.length() - 1) != first[0]) {
-                sb.append((char)first[0]);
+                sb.append((char) first[0]);
 
                 if(--first[1] > 0) {
-                    minHeap.offer(first);
+                    maxHeap.offer(first);
                 }
             }
 
             else {
-                if(minHeap.isEmpty()) {
+                if(maxHeap.isEmpty()) {
                     return "";
                 }
 
-                int[] second = minHeap.poll();
+                int[] second = maxHeap.poll();
+
                 sb.append((char) second[0]);
 
                 if(--second[1] > 0) {
-                    minHeap.offer(second);
+                    maxHeap.offer(second);
                 }
-                minHeap.offer(first);
+                maxHeap.offer(first);
             }
         }
-        return sb.toString();
 
+        return sb.toString();
     }
 }
