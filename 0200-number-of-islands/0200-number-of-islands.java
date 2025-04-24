@@ -1,34 +1,32 @@
 class Solution {
+    int ROWS, COLS;
 
-    private int ROWS;
-    private int COLS;
-    private int numOfIslands;
+    public void dfs(char[][] grid, int row, int col) {
+        if(row < 0 || row >= ROWS || col < 0 || col >= COLS || grid[row][col] == '0') {
+            return;
+        }
+        grid[row][col] = '0';
+        dfs(grid, row + 1, col);
+        dfs(grid, row, col + 1);
+        dfs(grid, row, col - 1);
+        dfs(grid, row - 1, col);
+
+    }
 
     public int numIslands(char[][] grid) {
         ROWS = grid.length;
-        COLS = grid[ROWS - 1].length;
-        for(int i = 0; i < ROWS; i++){
-            for(int j = 0; j < COLS; j++) {
+        COLS = grid[0].length;  
+        int count = 0;
+
+        for(int i = 0; i < ROWS; i++ ) {
+            for(int j = 0 ; j < COLS; j++) {
                 if(grid[i][j] == '1') {
-                    numOfIslands++;
-                    dfs(i, j, grid);
+                    dfs(grid, i, j);
+                    count++;
                 }
             }
         }
-        return numOfIslands;
-    }
 
-
-    private void dfs(int row, int col, char[][] grid) {
-        if(row < 0 || col < 0 || row >= ROWS || col >= COLS || grid[row][col] == '0') {
-            return;
-        }
-
-        grid[row][col] = '0';
-
-        dfs(row + 1, col, grid);
-        dfs(row - 1, col, grid);
-        dfs(row, col + 1, grid);
-        dfs(row, col - 1, grid);
+        return count;
     }
 }
