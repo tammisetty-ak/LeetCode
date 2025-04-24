@@ -1,32 +1,22 @@
-import java.util.Collection;
-
 class Solution {
     public List<String> removeAnagrams(String[] words) {
-        Stack<String> seen = new Stack<>();
-        List<String> res = new ArrayList<>();
+        List<String> result = new ArrayList<>();
+        String prevSorted = sortString(words[0]);
+        result.add(words[0]);
 
-        for(String word: words) {
-            int[] charCount = new int[26];
-
-            for(char c: word.toCharArray()) {
-                charCount[c - 'a']++;
+        for (int i = 1; i < words.length; i++) {
+            String currentSorted = sortString(words[i]);
+            if (!currentSorted.equals(prevSorted)) {
+                result.add(words[i]);
+                prevSorted = currentSorted;
             }
-
-            StringBuilder sb = new StringBuilder();
-
-            for(int i = 0; i < 26; i++) {
-                while(charCount[i]-- > 0) {
-                    sb.append(i + 'a');
-                }
-            }
-            if(seen.isEmpty() || !seen.peek().equals(sb.toString())) {
-                    seen.push(sb.toString());
-                    res.add(word);
-                }
         }
+        return result;
+    }
 
-        // Collection<String> temp = map.values();
-
-        return res;
+    private String sortString(String s) {
+        char[] arr = s.toCharArray();
+        Arrays.sort(arr);
+        return new String(arr);
     }
 }
