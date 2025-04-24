@@ -2,13 +2,11 @@ class Solution {
     public int leastInterval(char[] tasks, int n) {
         int[] charCounts = new int[26];
 
-        for(int i = 0; i < tasks.length; i++) {
-            charCounts[tasks[i] - 'A']++;
+        for(char ch : tasks) {
+            charCounts[ch - 'A']++;
         }
 
-        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> {
-            return Integer.compare(b, a);
-        });
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
 
         int time = 0;
 
