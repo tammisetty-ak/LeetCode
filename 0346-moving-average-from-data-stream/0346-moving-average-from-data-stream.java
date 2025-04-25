@@ -15,16 +15,6 @@ class MovingAverage {
         }
         return (winsum * 1.0) / Math.min(queue.size(), targetSize);
     }
-
-    public int findSum(Queue<Integer> temp) {
-        Queue<Integer> tempQueue = new LinkedList<>(temp);
-        int sum = 0;
-        while (!tempQueue.isEmpty()) {
-            sum += tempQueue.poll();
-        }
-
-        return sum;
-    }
 }
 
 /**
