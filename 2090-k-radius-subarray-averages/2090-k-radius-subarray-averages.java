@@ -1,28 +1,29 @@
 class Solution {
-    int k;
-
     public int[] getAverages(int[] nums, int k) {
-        this.k = k;
         int n = nums.length;
 
-        int winSum = 0;
         int[] res = new int[n];
 
-        for (int i = 0; i < n; i++) {
-            if (i >= k && i < n - k) {
-                res[i] = calcRunningSum(nums, i);
-                continue;
-            }
-            res[i] = -1;
-        }
-        return res;
-    }
+        Arrays.fill(res, -1);
 
-    public int calcRunningSum(int[] nums, int index) {
-        long winSum = 0;
-        for (int i = index - k; i <= index + k; i++) {
+        int winSize = (2 * k) + 1;
+
+        if(winSize > n) {
+            return res;
+        }
+
+        int winSum = 0;
+
+        for(int i = 0; i < winSize; i++) {
             winSum += nums[i];
         }
-        return (int) (winSum / (2L * k + 1));
+        res[k] = winSum / winSize;
+
+        for(int i = k + 1; i < n - k; i++) {
+            winSum = winSum + nums[i + k] - nums[i - k - 1];
+            res[i] = winSum / winSize;
+        }
+
+        return res;
     }
 }
