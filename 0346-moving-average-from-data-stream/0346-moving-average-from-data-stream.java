@@ -1,19 +1,22 @@
 class MovingAverage {
-    List<Integer> queue;
+    Queue<Integer> queue;
+    int count = 0, winSum = 0;
     int targetSize;
 
     public MovingAverage(int size) {
-        queue = new ArrayList();
+        queue = new ArrayDeque();
         targetSize = size;
     }
 
     public double next(int val) {
+        count++;
         queue.add(val);
         int winsum = 0;
-        for(int i = Math.max(0, queue.size() - targetSize); i < queue.size(); i++) {
-            winsum += (int) queue.get(i);
-        }
-        return (winsum * 1.0) / Math.min(queue.size(), targetSize);
+        int tail = count > targetSize ? (int) queue.poll() : 0;
+
+        winSum = winSum - tail + val;
+
+        return (winSum * 1.0) / Math.min(count, targetSize);
     }
 }
 
