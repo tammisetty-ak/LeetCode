@@ -27,9 +27,9 @@ class Solution {
         }
         
         res.add(root.val);
-        Queue<Node> c = new LinkedList(root.children);
-        while(!c.isEmpty()) {
-            preorderHelper(c.poll());
+        List<Node> c = new ArrayList(root.children);
+        for(Node k : c) {
+            preorderHelper(k);
         }
     }
     
