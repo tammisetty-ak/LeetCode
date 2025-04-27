@@ -1,20 +1,29 @@
-class Solution {
+public class Solution {
+
     public int maxProduct(int[] nums) {
-        if(nums.length == 0) {
-            return 0;
+        if (nums.length == 0) return 0;
+
+        int max_so_far = nums[0];
+        int min_so_far = nums[0];
+        int result = max_so_far;
+
+        for (int i = 1; i < nums.length; i++) {
+            int curr = nums[i];
+            int temp_max = Math.max(
+                curr,
+                Math.max(max_so_far * curr, min_so_far * curr)
+            );
+            min_so_far = Math.min(
+                curr,
+                Math.min(max_so_far * curr, min_so_far * curr)
+            );
+
+            // Update max_so_far after min_so_far to avoid overwriting it
+            max_so_far = temp_max;
+            // Update the result with the maximum product found so far
+            result = Math.max(max_so_far, result);
         }
-        if(nums.length == 1) {
-            return nums[0];
-        }
-        int maxProd = 0;
-        int minProd = 0;
-        int res = maxProd;
-        for(int i : nums) {
-            int prod = Math.max(i, Math.max(maxProd * i, minProd * i));
-            minProd = Math.min(i, Math.min(maxProd * i, minProd * i));
-            maxProd = prod;
-            res = Math.max(maxProd, res);
-        }
-        return res;
+
+        return result;
     }
 }
