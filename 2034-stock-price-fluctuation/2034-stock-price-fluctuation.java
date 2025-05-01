@@ -1,41 +1,48 @@
 class StockPrice {
 
-    TreeMap<Integer, Integer> priceCount;
-    Map<Integer, Integer> timePrice;
+    TreeMap<Integer, Integer> timemap;
+    PriorityQueue<int[]> minHeap, maxHeap;
     int latest;
 
     public StockPrice() {
-        timePrice = new HashMap();
-        priceCount = new TreeMap();
+        timemap = new TreeMap();
+        minHeap = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+        maxHeap = new PriorityQueue<>((a,b) -> b[0] - a[0]);
         latest = 0;
     }
     
     public void update(int timestamp, int price) {
         latest = Math.max(timestamp, latest);
-        if(timePrice.containsKey(timestamp)) {
-            int oldPrice = timePrice.get(timestamp);
-            int count = priceCount.get(oldPrice);
-            if(count == 1) {
-                priceCount.remove(oldPrice);
-            }
-            else {
-                priceCount.put(oldPrice, count - 1);
-            }
-        }
-        timePrice.put(timestamp, price);
-        priceCount.put(price, priceCount.getOrDefault(price, 0) + 1);
+        timemap.put(timestamp, price);
+
+        minHeap.add(new int[] {price, timestamp});
+        maxHeap.add(new int[] {price, timestamp});
     }
     
     public int current() {
-        return timePrice.get(latest);
+        return timemap.get(latest);
     }
     
     public int maximum() {
-        return priceCount.lastKey();
+        int[] top = maxHeap.peek();
+
+        while(timemap.get(top[1]) != top[0]) {
+            maxHeap.remove();
+            top = maxHeap.peek();
+        }
+
+        return top[0];
     }
     
     public int minimum() {
-        return priceCount.firstKey();
+        int[] top = minHeap.peek();
+
+        while(timemap.get(top[1]) != top[0]) {
+            minHeap.remove();
+            top = minHeap.peek();
+        }
+
+        return top[0];
     }
 }
 
