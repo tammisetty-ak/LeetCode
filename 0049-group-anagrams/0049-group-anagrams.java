@@ -32,12 +32,6 @@ class Solution {
 
         }
 
-        List<List<String>> res = new ArrayList();
-        for(Map.Entry<String, List<String>> e: map.entrySet()) {
-            List<String> arr = e.getValue();
-            res.add(arr);
-        }
-
-        return res;
+        return new ArrayList(map.values());
     }
 }
