@@ -17,14 +17,20 @@ class Solution {
     public int pickIndex() {
         double target = totalSum * Math.random();
 
-        int i = 0;
-        for(; i < prefixSums.length; i++) {
-            if(target < prefixSums[i]) {
-                return i;
+        int low = 0, high = prefixSums.length;
+
+        while(low < high) {
+            int mid = low + (high - low) / 2;
+
+            if(target <= prefixSums[mid]) {
+                high = mid;
+            }
+            else {
+                low = mid + 1;
             }
         }
-        return i - 1;
-        
+
+        return high;
     }
 }
 
