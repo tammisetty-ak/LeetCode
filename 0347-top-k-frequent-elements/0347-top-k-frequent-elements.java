@@ -6,7 +6,7 @@ class Solution {
             map.put(i, map.getOrDefault(i, 0) + 1);
         }
 
-        PriorityQueue<Integer> heap = new PriorityQueue<>((a,b) -> {
+        PriorityQueue<Integer> heap = new PriorityQueue<>((a, b) -> {
             return map.get(a) - map.get(b);
         });
 
@@ -17,12 +17,13 @@ class Solution {
             }
         }
 
-        int[] res = new int[heap.size()];
-        int i = 0;
-        while(!heap.isEmpty()) {
-            res[i++] = heap.poll();
+        int[] top = new int[k];
+
+        for(int i = k - 1; i>= 0; i--){
+            top[i] = heap.poll();
         }
 
-        return res;
+        return top;
+
     }
 }
