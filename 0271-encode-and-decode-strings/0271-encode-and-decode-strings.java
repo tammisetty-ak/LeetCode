@@ -7,7 +7,6 @@ public class Codec {
         for(String str: strs) {
             res.append(str.length()).append(":").append(str);
         }
-
         return res.toString();
     }
 
@@ -17,17 +16,15 @@ public class Codec {
 
         List<String> res = new ArrayList();
 
-        while( i < s.length() ) {
-
+        while(i < s.length()) {
             int colIndex = s.indexOf(":", i);
             
             int length = Integer.parseInt(s.substring(i, colIndex));
 
             i = colIndex + 1;
 
-            
             res.add(s.substring(i, i + length));
-            
+
             i += length;
         }
 
