@@ -1,22 +1,16 @@
 class Solution {
+    private HashMap<Character, Integer> createMap(String s) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        for(char c: s.toCharArray()) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+
+        return map;
+    }
     public boolean isAnagram(String s, String t) {
-        if(s.length() != t.length()) {
-            return false;
-        }
+        HashMap<Character, Integer> map1 = createMap(s);
+        HashMap<Character, Integer> map2 = createMap(t);
 
-        int[] counter = new int[26];
-
-        for(int i = 0; i < s.length(); i++) {
-            counter[s.charAt(i) - 'a']++;
-            counter[t.charAt(i) - 'a']--;
-        }
-
-        for(int i = 0; i < 26; i++) {
-            if(counter[i] != 0) {
-                return false;
-            }
-        }
-
-        return true;
+        return map1.equals(map2);
     }
 }
