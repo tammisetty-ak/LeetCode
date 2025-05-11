@@ -12,15 +12,19 @@ class SparseVector {
     
 	// Return the dotProduct of two sparse vectors
     public int dotProduct(SparseVector vec) {
-        Set<Integer> keys = map.keySet();
-        int sum = 0;
-        for(int key: keys) {
-            if(vec.map.containsKey(key)) {
-                sum += map.get(key) * vec.map.get(key);
-            }
+    // Determine which map is smaller to iterate over
+    HashMap<Integer, Integer> smaller = this.map.size() < vec.map.size() ? this.map : vec.map;
+    HashMap<Integer, Integer> larger = this.map.size() < vec.map.size() ? vec.map : this.map;
+
+    int sum = 0;
+    for (int key : smaller.keySet()) {
+        if (larger.containsKey(key)) {
+            sum += smaller.get(key) * larger.get(key);
         }
-        return sum;
     }
+    return sum;
+}
+
 }
 
 // Your SparseVector object will be instantiated and called as such:
