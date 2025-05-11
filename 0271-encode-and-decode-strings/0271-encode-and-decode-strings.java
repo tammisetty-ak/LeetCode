@@ -2,24 +2,32 @@ public class Codec {
 
     // Encodes a list of strings to a single string.
     public String encode(List<String> strs) {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder res = new StringBuilder();
+
         for(String str: strs) {
-            sb.append(str.length()).append(":").append(str);
+            res.append(str.length()).append(":").append(str);
         }
-        return sb.toString();
+
+        return res.toString();
     }
 
     // Decodes a single string to a list of strings.
     public List<String> decode(String s) {
-        List<String> res = new ArrayList();
-
         int i = 0;
 
-        while(i < s.length()) {
+        List<String> res = new ArrayList();
+
+        while( i < s.length() ) {
+
             int colIndex = s.indexOf(":", i);
+            
             int length = Integer.parseInt(s.substring(i, colIndex));
+
             i = colIndex + 1;
+
+            
             res.add(s.substring(i, i + length));
+            
             i += length;
         }
 
