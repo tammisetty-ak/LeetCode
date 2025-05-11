@@ -24,15 +24,12 @@ class Solution {
                 }
             }
 
-            map.putIfAbsent(sb.toString(), new ArrayList());
-
-            if(map.containsKey(sb.toString())){
-                List<String> val = map.get(sb.toString());
-                val.add(str);
-                map.put(sb.toString(), val);
+            if(!map.containsKey(sb.toString())) {
+                map.put(sb.toString(), new ArrayList());
             }
 
-            // map.put(sb.toString(), map.getOrDefault(sb.toString(), new ArrayList()).add(str));
+            map.get(sb.toString()).add(str);
+
         }
 
         List<List<String>> res = new ArrayList();
