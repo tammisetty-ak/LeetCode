@@ -4,8 +4,7 @@ public class Codec {
     public String encode(List<String> strs) {
         StringBuilder sb = new StringBuilder();
         for(String str: strs) {
-            sb.append(str);
-            sb.append('ß');
+            sb.append(str.length()).append(":").append(str);
         }
         return sb.toString();
     }
@@ -14,14 +13,14 @@ public class Codec {
     public List<String> decode(String s) {
         List<String> res = new ArrayList();
 
-        int start = 0;
+        int i = 0;
 
-        for(int i = 0; i < s.length(); i++) {
-            if(s.charAt(i) == 'ß') {
-                int end = i;
-                res.add(s.substring(start, end));
-                start = end + 1;
-            }
+        while(i < s.length()) {
+            int colIndex = s.indexOf(":", i);
+            int length = Integer.parseInt(s.substring(i, colIndex));
+            i = colIndex + 1;
+            res.add(s.substring(i, i + length));
+            i += length;
         }
 
         return res;
