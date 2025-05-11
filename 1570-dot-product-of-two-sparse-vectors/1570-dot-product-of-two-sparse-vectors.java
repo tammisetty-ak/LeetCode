@@ -1,30 +1,25 @@
 class SparseVector {
+    List<int[]> lst;
 
-    HashMap<Integer, Integer> map = new HashMap();
-    
     SparseVector(int[] nums) {
+        lst = new ArrayList();
+
         for(int i = 0; i < nums.length; i++) {
-            if(nums[i] != 0) {
-                map.put(i, nums[i]);
-            }
+            lst.add(new int[]{i, nums[i]});
         }
     }
     
 	// Return the dotProduct of two sparse vectors
     public int dotProduct(SparseVector vec) {
-    // Determine which map is smaller to iterate over
-    HashMap<Integer, Integer> smaller = this.map.size() < vec.map.size() ? this.map : vec.map;
-    HashMap<Integer, Integer> larger = this.map.size() < vec.map.size() ? vec.map : this.map;
-
-    int sum = 0;
-    for (int key : smaller.keySet()) {
-        if (larger.containsKey(key)) {
-            sum += smaller.get(key) * larger.get(key);
+        int i = 0, j = 0;
+        int res = 0;
+        while(i < lst.size() && j < vec.lst.size()) {
+            res += lst.get(i)[1] * vec.lst.get(j)[1];
+            i++;
+            j++;
         }
+        return res;
     }
-    return sum;
-}
-
 }
 
 // Your SparseVector object will be instantiated and called as such:
