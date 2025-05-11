@@ -22,7 +22,7 @@ class Solution {
         while(low < high) {
             int mid = low + (high - low) / 2;
 
-            if(target <= prefixSums[mid]) {
+            if(target < prefixSums[mid]) {
                 high = mid;
             }
             else {
