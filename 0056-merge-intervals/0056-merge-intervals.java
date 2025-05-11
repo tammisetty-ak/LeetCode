@@ -1,17 +1,27 @@
 class Solution {
     public int[][] merge(int[][] intervals) {
-        Arrays.sort(intervals, (a,b) -> Integer.compare(a[0], b[0]));
-        LinkedList<int[]> mergedIntervals = new LinkedList();
 
-        for(int[] interval: intervals) {
-            if(mergedIntervals.isEmpty() || mergedIntervals.getLast()[1] < interval [0]) {
-                mergedIntervals.add(interval);
+        Arrays.sort(intervals, (a, b) -> {
+            return a[0] - b[0];
+        });
+
+        List<int[]> merged = new ArrayList();
+        int[] last = intervals[0];
+        merged.add(last);
+
+        for(int i = 1; i < intervals.length; i++) {
+            int currStart = intervals[i][0];
+            int currEnd = intervals[i][1];
+
+            if(currStart <= last[1]) {
+                last[1] = Math.max(last[1], currEnd);
             }
             else{
-                mergedIntervals.getLast()[1] = Math.max(mergedIntervals.getLast()[1], interval[1]);
+                last = intervals[i];
+                merged.add(last);
             }
         }
 
-        return mergedIntervals.toArray(new int[mergedIntervals.size()][]);
+        return merged.toArray(new int[merged.size()][]);
     }
 }
