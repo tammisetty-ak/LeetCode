@@ -1,7 +1,8 @@
 class Solution {
 
-    int totalSum;
+
     int[] prefixSums;
+    int totalSum;
 
     public Solution(int[] w) {
         prefixSums = new int[w.length];
@@ -10,7 +11,6 @@ class Solution {
             prefixSum += w[i];
             prefixSums[i] = prefixSum;
         }
-
         totalSum = prefixSum;
     }
     
@@ -29,8 +29,7 @@ class Solution {
                 low = mid + 1;
             }
         }
-
-        return high;
+        return low;
     }
 }
 
