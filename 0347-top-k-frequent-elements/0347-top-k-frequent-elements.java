@@ -1,12 +1,12 @@
 class Solution {
     public int[] topKFrequent(int[] nums, int k) {
-        HashMap<Integer, Integer> map = new HashMap();
+        HashMap<Integer, Integer> map = new HashMap<>();
 
-        for(int i: nums) {
+        for(int i : nums) {
             map.put(i, map.getOrDefault(i, 0) + 1);
         }
 
-        PriorityQueue<Integer> heap = new PriorityQueue<>((a, b) -> {
+        PriorityQueue<Integer> heap = new PriorityQueue<Integer>((a, b) -> {
             return map.get(a) - map.get(b);
         });
 
@@ -17,13 +17,12 @@ class Solution {
             }
         }
 
-        int[] top = new int[k];
+        int[] res = new int[k];
 
-        for(int i = k - 1; i>= 0; i--){
-            top[i] = heap.poll();
+        for(int i = 0; i < k; i++) {
+            res[i] = heap.poll();
         }
 
-        return top;
-
+        return res;
     }
 }
