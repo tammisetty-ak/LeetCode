@@ -7,7 +7,7 @@ class Solution {
         Arrays.fill(res, 1);
 
         for(int i = 1; i < n; i++) {
-            res[i] = res[i - 1] * nums[i - 1];
+            res[i] = res[i-1] * nums[i-1];
         }
 
         int prod = 1;
@@ -18,6 +18,5 @@ class Solution {
         }
 
         return res;
-
     }
 }
