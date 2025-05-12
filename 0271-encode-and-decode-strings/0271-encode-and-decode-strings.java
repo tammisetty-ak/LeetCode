@@ -4,9 +4,10 @@ public class Codec {
     public String encode(List<String> strs) {
         StringBuilder res = new StringBuilder();
 
-        for(String str: strs) {
+        for(String str: strs) { 
             res.append(str.length()).append(":").append(str);
         }
+
         return res.toString();
     }
 
