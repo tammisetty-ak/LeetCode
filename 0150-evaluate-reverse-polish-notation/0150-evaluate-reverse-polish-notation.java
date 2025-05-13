@@ -3,7 +3,11 @@ class Solution {
         Stack<Integer> stack = new Stack<>();
 
         for(String token : tokens) {
-            if("+-*/".contains(token)) {
+            if(!"+-*/".contains(token)) {
+                stack.push(Integer.parseInt(token));
+                continue;
+            }
+            else {
                 int op1 = stack.pop();
                 int op2 = stack.pop();
                 switch (token) {
@@ -16,9 +20,6 @@ class Solution {
                     case "*" : stack.push(op2 * op1);
                                 break;
                 }
-            }
-            else {
-                stack.push(Integer.parseInt(token));
             }
         }
         return stack.peek();
