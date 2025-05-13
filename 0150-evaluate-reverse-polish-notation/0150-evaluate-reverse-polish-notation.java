@@ -1,10 +1,9 @@
 class Solution {
     public int evalRPN(String[] tokens) {
         Stack<Integer> stack = new Stack<>();
-        Set<String> ops = new HashSet<>(Arrays.asList("+", "-", "/", "*"));
 
         for(String token : tokens) {
-            if(ops.contains(token)) {
+            if("+-*/".contains(token)) {
                 int op1 = stack.pop();
                 int op2 = stack.pop();
                 switch (token) {
