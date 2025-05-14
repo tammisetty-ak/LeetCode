@@ -1,5 +1,4 @@
 class MinStack {
-
     Stack<int[]> stack;
 
     public MinStack() {
@@ -11,7 +10,7 @@ class MinStack {
             stack.push(new int[]{val, val});
             return;
         }
-        stack.push(new int[] {val, Math.min(val, stack.peek()[1])});
+        stack.push(new int[] {val, Math.min(stack.peek()[1], val)});
     }
     
     public void pop() {
