@@ -5,19 +5,18 @@ class Solution {
 
         for(int i = 0; i < N; i++) {
             cars[i] = new Car(position[i], (double) (target - position[i]) / speed[i]);
-        } 
+        }
 
-        Arrays.sort(cars, (a,b) -> {
+        Arrays.sort(cars, (a, b) -> {
             return a.position - b.position;
         });
 
-        int ans = 0, t = N;
+        int t = N, ans = 0;
 
         while(--t > 0) {
             if(cars[t-1].time > cars[t].time) {
                 ans++;
             }
-
             else {
                 cars[t-1] = cars[t];
             }
@@ -29,10 +28,9 @@ class Solution {
     public class Car {
         int position;
         double time;
-
-        public Car(int p, double t) {
-            position = p;
-            time = t;
+        public Car(int position, double time) {
+            this.position = position;
+            this.time = time;
         }
     }
 }
