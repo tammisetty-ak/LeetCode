@@ -7,21 +7,24 @@ class Solution {
         return res;
     }
 
-    private void backtracking(List<String> res, StringBuilder sb, int open, int close, int n) {
-        if(sb.length() == n * 2) {
-            res.add(sb.toString());
+    private void backtracking(List<String> res, StringBuilder currString, int open, int closed, int n) {
+        if(currString.length() == 2 * n) {
+            res.add(currString.toString());
+            return;
         }
 
         if(open < n) {
-            sb.append("(");
-            backtracking(res, sb, open + 1, close, n);
-            sb.deleteCharAt(sb.length() - 1);
+            currString.append("(");
+            backtracking(res, currString, open + 1, closed, n);
+            currString.deleteCharAt(currString.length() - 1);
         }
-        
-        if(close < open) {
-            sb.append(")");
-            backtracking(res, sb, open, close + 1, n);
-            sb.deleteCharAt(sb.length() - 1);
+
+        if(closed < open) {
+            currString.append(")");
+            backtracking(res, currString, open, closed + 1, n);
+            currString.deleteCharAt(currString.length() - 1);
         }
     }
-}
+
+
+} 
