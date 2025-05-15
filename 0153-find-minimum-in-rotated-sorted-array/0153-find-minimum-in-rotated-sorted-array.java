@@ -2,9 +2,10 @@ class Solution {
     public int findMin(int[] nums) {
         int left = 0, right = nums.length - 1;
 
-        if(nums[right] >= nums[left]) {
+        if(nums[left] <= nums[right]) {
             return nums[left];
         }
+
 
         while(left < right) {
             int mid = left + (right - left) / 2;
@@ -17,7 +18,8 @@ class Solution {
                 return nums[mid];
             }
 
-            if(nums[mid] > nums[0]) {
+
+            if(nums[0] < nums[mid]) {
                 left = mid + 1;
             }
             else {
