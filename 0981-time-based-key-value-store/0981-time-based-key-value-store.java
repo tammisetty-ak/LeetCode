@@ -23,21 +23,21 @@ class TimeMap {
         }
 
         // classic binary search for the last index where ts[idx] <= timestamp
-        int left = 0, right = timeMap.get(key).size();
-        while (left < right) {
+        int left = 0, right = timeMap.get(key).size() - 1;
+        while (left <= right) {
             int mid = left + (right - left) / 2;
             int t = timeMap.get(key).get(mid).getKey();
             if (t <= timestamp) {
                 left = mid + 1;
             } else {
-                right = mid;
+                right = mid - 1;
             }
         }
 
-        if(right == 0) {
+        if(right == -1) {
             return "";
         }
         // now right is the largest index with timestamps.get(right) < timestamp
-        return timeMap.get(key).get(right - 1).getValue();
+        return timeMap.get(key).get(right).getValue();
     }
 }
