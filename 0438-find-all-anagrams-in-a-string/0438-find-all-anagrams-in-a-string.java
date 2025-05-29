@@ -1,29 +1,38 @@
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
-        int[] pcount = new int[26];
-        int[] scount = new int[26];
+        int pLen = p.length(), sLen = s.length();
 
-        List<Integer> res = new ArrayList();
+        if (sLen < pLen) return new ArrayList<>();
 
-        if(s.length() < p.length()) {
-            return res;
-        }
-        
-        for(int i = 0; i < p.length(); i++) {
-            pcount[p.charAt(i) - 'a']++;
-            scount[s.charAt(i) - 'a']++;
+        Map<Character, Integer> pMap = new HashMap<>();
+        for (char c : p.toCharArray()) {
+            pMap.put(c, pMap.getOrDefault(c, 0) + 1);
         }
 
-        if(Arrays.equals(pcount, scount)) {res.add(0);}
+        Map<Character, Integer> window = new HashMap<>();
+        List<Integer> result = new ArrayList<>();
 
-        for(int i = p.length(); i < s.length(); i++) {
-            scount[s.charAt(i) - 'a']++;
-            scount[s.charAt(i - p.length()) - 'a']--;
+        for (int i = 0; i < sLen; i++) {
+            // Add current character to window
+            char rightChar = s.charAt(i);
+            window.put(rightChar, window.getOrDefault(rightChar, 0) + 1);
 
-            if(Arrays.equals(pcount, scount)) {res.add(i - p.length() + 1);}
+            // Shrink window if it's larger than p
+            if (i >= pLen) {
+                char leftChar = s.charAt(i - pLen);
+                if (window.get(leftChar) == 1) {
+                    window.remove(leftChar);
+                } else {
+                    window.put(leftChar, window.get(leftChar) - 1);
+                }
+            }
+
+            // Compare maps
+            if (window.equals(pMap)) {
+                result.add(i - pLen + 1);
+            }
         }
 
-        return res;
-
+        return result;
     }
 }
