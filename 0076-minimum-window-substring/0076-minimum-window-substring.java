@@ -1,42 +1,44 @@
 class Solution {
     public String minWindow(String s, String t) {
         Map<Character, Integer> mapT = new HashMap();
-        for(char c: t.toCharArray()) {
-            mapT.put(c, mapT.getOrDefault(c, 0) + 1);
+
+        for(char ct : t.toCharArray()) {
+            mapT.put(ct, mapT.getOrDefault(ct, 0) + 1);
         }
 
-        int required = mapT.size();
-        int formed = 0;
-        int left = 0, right = 0;
+        int req = mapT.size();
         Map<Character, Integer> windowMap = new HashMap();
+        int l = 0, r = 0;
+        int formed = 0;
+
         int[] ans = {-1, 0, 0};
 
-        while(right < s.length()) {
-            char c = s.charAt(right);
-            windowMap.put(c, windowMap.getOrDefault(c, 0) + 1);
+        while(r < s.length()) {
+            char c = s.charAt(r);
+            int count = windowMap.getOrDefault(c, 0);
+            windowMap.put(c, count + 1);
 
-            if(mapT.containsKey(c) && mapT.get(c) == windowMap.get(c)) {
+            if(mapT.containsKey(c) && mapT.get(c).intValue() == windowMap.get(c).intValue()) {
                 formed++;
-
-
-                while(left <= right && formed == required) {
-                    if(ans[0] == -1 || right - left + 1 < ans[0]) {
-                        ans[0] = right - left + 1;
-                        ans[1] = left;
-                        ans[2] = right;
-                    }
-                    int count = windowMap.get(s.charAt(left));
-
-                    windowMap.put(s.charAt(left), count - 1);
-                    if(mapT.containsKey(s.charAt(left)) && windowMap.get(s.charAt(left)) < mapT.get(s.charAt(left))) {
-                        formed--;
-                    }
-                    left++;
-                }
             }
-            right++;
-        }
 
+            while(l <= r && formed == req) {
+                c = s.charAt(l);
+                if(ans[0] == -1 || r - l + 1 < ans[0]) {
+                    ans[0] = r - l + 1;
+                    ans[1] = l;
+                    ans[2] = r;
+                }
+
+                windowMap.put(c, windowMap.get(c) - 1);
+                if(mapT.containsKey(c) && windowMap.get(c).intValue() < mapT.get(c).intValue()) {
+                    formed--;
+                }
+                l++;
+            }
+            r++;
+        }
         return ans[0] == -1 ? "" : s.substring(ans[1], ans[2] + 1);
+
     }
 }
