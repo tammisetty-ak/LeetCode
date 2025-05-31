@@ -1,5 +1,5 @@
 class LRUCache {
-
+    
     public class ListNode {
         int key;
         int val;
@@ -11,17 +11,18 @@ class LRUCache {
             this.val = val;
         }
     }
-
+    
     private ListNode head;
     private ListNode tail;
     private int capacity;
-    private Map<Integer, ListNode> map;
+    private HashMap<Integer, ListNode> map;
 
     public LRUCache(int capacity) {
         this.capacity = capacity;
         map = new HashMap();
         head = new ListNode(-1, -1);
         tail = new ListNode(-1, -1);
+
         head.next = tail;
         tail.prev = head;
     }
@@ -38,12 +39,13 @@ class LRUCache {
     
     public void put(int key, int value) {
         if(map.containsKey(key)) {
-            ListNode oldNode =  map.get(key);
-            removeNode(oldNode);
+            ListNode nodeToBeDeleted = map.get(key);
+            removeNode(nodeToBeDeleted);
         }
-        ListNode newNode = new ListNode(key, value);
-        map.put(key, newNode);
-        addNode(newNode);
+        ListNode node = new ListNode(key, value);
+        map.put(key, node);
+        addNode(node);
+
         if(map.size() > capacity) {
             ListNode nodeToBeDeleted = head.next;
             removeNode(nodeToBeDeleted);
