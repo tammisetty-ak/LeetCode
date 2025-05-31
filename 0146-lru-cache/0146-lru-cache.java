@@ -14,16 +14,14 @@ class LRUCache {
 
     private ListNode head;
     private ListNode tail;
-    private int size;
     private int capacity;
     private Map<Integer, ListNode> map;
 
     public LRUCache(int capacity) {
         this.capacity = capacity;
-        size = 0;
+        map = new HashMap();
         head = new ListNode(-1, -1);
         tail = new ListNode(-1, -1);
-        map = new HashMap();
         head.next = tail;
         tail.prev = head;
     }
@@ -40,12 +38,10 @@ class LRUCache {
     
     public void put(int key, int value) {
         if(map.containsKey(key)) {
-            ListNode oldNode = map.get(key);
+            ListNode oldNode =  map.get(key);
             removeNode(oldNode);
         }
-
         ListNode newNode = new ListNode(key, value);
-
         map.put(key, newNode);
         addNode(newNode);
         if(map.size() > capacity) {
