@@ -14,7 +14,6 @@
  * }
  */
 class Solution {
-    private boolean isBalanced;
 
     private int isBalancedHelper(TreeNode root) {
         if(root == null) {
@@ -23,14 +22,12 @@ class Solution {
 
         int left = isBalancedHelper(root.left) + 1;
         int right = isBalancedHelper(root.right) + 1;
-        if(Math.abs(left - right) > 1) {
-            isBalanced = false;
+        if(left == 0 || right == 0 || Math.abs(left - right) > 1) {
+            return -1;
         }
         return Math.max(left, right);
     }
     public boolean isBalanced(TreeNode root) {
-        isBalanced = true;
-        isBalancedHelper(root);
-        return isBalanced;
+        return isBalancedHelper(root) != -1;
     }
 }
