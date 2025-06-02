@@ -1,31 +1,22 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
 class Solution {
-    private int diameter = -1;
-    private int diameterHelper(TreeNode root) {
-        if(root == null) {
-            return -1;
-        }
-        int left = diameterHelper(root.left) + 1;
-        int right = diameterHelper(root.right) + 1;
-        diameter = Math.max(left + right, diameter);
-        return Math.max(left, right);
-    }
+    private int diameter;
     public int diameterOfBinaryTree(TreeNode root) {
-        diameterHelper(root);
+        diameter = 0;
+        longestPath(root);
         return diameter;
+    }
+    private int longestPath(TreeNode node){
+        if(node == null) return -1;
+        // recursively find the longest path in
+        // both left child and right child
+        int leftPath = longestPath(node.left);
+        int rightPath = longestPath(node.right);
+
+        // update the diameter if left_path plus right_path is larger
+        diameter = Math.max(diameter, leftPath + rightPath + 2);
+
+        // return the longest one between left_path and right_path;
+        // remember to add 1 for the path connecting the node and its parent
+        return Math.max(leftPath, rightPath) + 1;
     }
 }
