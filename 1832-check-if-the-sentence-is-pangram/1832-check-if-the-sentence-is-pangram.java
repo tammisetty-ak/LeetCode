@@ -6,8 +6,8 @@ class Solution {
             chars[c - 'a']++;
         }
 
-        for(int i = 0; i < 26; i++) {
-            if(chars[i] < 1) {
+        for(int i: chars) {
+            if(i < 1) {
                 return false;
             }
         }
