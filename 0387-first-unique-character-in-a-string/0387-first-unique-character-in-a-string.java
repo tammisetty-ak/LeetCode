@@ -1,15 +1,18 @@
 class Solution {
     public int firstUniqChar(String s) {
-        int[] count = new int[26];
+        int n = s.length();
+        
+        for (int i = 0; i < n; i++) {
+            boolean isUnique = true;
+            
+            for (int j = 0; j < n; j++) {
+                if (i != j && s.charAt(i) == s.charAt(j)) {
+                    isUnique = false;
+                    break;
+                }
+            }
 
-        // Count frequency of each character
-        for (char c : s.toCharArray()) {
-            count[c - 'a']++;
-        }
-
-        // Find index of first unique character
-        for (int i = 0; i < s.length(); i++) {
-            if (count[s.charAt(i) - 'a'] == 1) {
+            if (isUnique) {
                 return i;
             }
         }
