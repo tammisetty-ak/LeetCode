@@ -30,12 +30,6 @@ class Solution {
             map.put(embedded, list);
         }
 
-        List<List<String>> ans = new ArrayList();
-
-        for(String key : map.keySet()) {
-            ans.add(map.get(key));
-        }
-
-        return ans;
+        return new ArrayList(map.values());
     }
 }
