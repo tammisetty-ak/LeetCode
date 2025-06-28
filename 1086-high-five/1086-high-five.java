@@ -4,8 +4,11 @@ class Solution {
 
         for(int[] item: items) {
             int id = item[0];
-            PriorityQueue<Integer> queue = map.getOrDefault(id, new PriorityQueue<>(Collections.reverseOrder()));
+            PriorityQueue<Integer> queue = map.getOrDefault(id, new PriorityQueue<>());
             queue.offer(item[1]);
+            if(queue.size() > 5) {
+                queue.poll();
+            }
             map.put(id, queue);
         }
 
@@ -16,7 +19,7 @@ class Solution {
             int top = 0;
             int sum = 0;
             PriorityQueue <Integer> queue = map.get(key);
-            while(top++ < 5) {
+            while(!queue.isEmpty()) {
                 sum += queue.poll();
             }
             int[] temp = { key, sum / 5 };
