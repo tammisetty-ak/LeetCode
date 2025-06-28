@@ -1,34 +1,27 @@
 class LRUCache {
 
-    public class TreeNode {
+    public class ListNode {
         int key;
         int val;
-        TreeNode prev;
-        TreeNode next;
+        ListNode next;
+        ListNode prev;
 
-        public TreeNode() {
-            prev = null;
-            next = null;
-        }
-
-        public TreeNode(int key, int val) {
+        public ListNode(int key, int val) {
             this.key = key;
             this.val = val;
-            prev = null;
-            next = null;
         }
     }
 
     int capacity;
-    TreeNode head, tail;
-    Map<Integer, TreeNode> map;
+    ListNode head, tail;
+    Map<Integer, ListNode> map;
 
     public LRUCache(int capacity) {
-        this.capacity = capacity;
-        head = new TreeNode(-1, -1);
-        tail = new TreeNode(-1, -1);
-        map = new HashMap();
+        head = new ListNode(-1, -1);
+        tail = new ListNode(-1, -1);
 
+        map = new HashMap();
+        this.capacity = capacity;
         head.next = tail;
         tail.prev = head;
     }
@@ -37,36 +30,39 @@ class LRUCache {
         if(!map.containsKey(key)) {
             return -1;
         }
-        TreeNode node = map.get(key);
-        deleteNode(node);
+        ListNode node = map.get(key);
+        removeNode(node);
         addNode(node);
-        return node.val;
+        return node.key;
     }
     
     public void put(int key, int value) {
         if(map.containsKey(key)) {
-            deleteNode(map.get(key));
+            removeNode(map.get(key));
+            map.remove(key);
         }
-        TreeNode node = new TreeNode(key, value);
+
+        ListNode node = new ListNode(key, value);
         map.put(key, node);
         addNode(node);
-        
         if(map.size() > capacity) {
-            TreeNode nodeToDelete = head.next;
-            deleteNode(nodeToDelete);
-            map.remove(nodeToDelete.key);
+            ListNode nodeToBeDeleted = head.next;
+            removeNode(nodeToBeDeleted);
+            map.remove(nodeToBeDeleted.key);
         }
     }
-    private void addNode(TreeNode node) {
-        TreeNode prevTail = tail.prev;
+
+    public void removeNode(ListNode node) {
+        node.next.prev = node.prev;
+        node.prev.next = node.next;
+    }
+
+    public void addNode(ListNode node) {
+        ListNode prevTail = tail.prev;
         prevTail.next = node;
         node.prev = prevTail;
         node.next = tail;
         tail.prev = node;
-    }
-    private void deleteNode(TreeNode node) {
-        node.next.prev = node.prev;
-        node.prev.next = node.next;
     }
 }
 
