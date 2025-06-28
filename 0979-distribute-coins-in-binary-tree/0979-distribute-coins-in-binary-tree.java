@@ -14,6 +14,7 @@
  * }
  */
 class Solution {
+
     int moves;
 
     private int dfs(TreeNode curr) {
