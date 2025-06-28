@@ -1,32 +1,41 @@
 class Solution {
-    public List<List<String>> groupAnagrams(String[] strs) {
-        Map<String, List> map = new HashMap();
-        int[] count = new int[26];
-        StringBuilder sb = new StringBuilder();
 
-        for(String str: strs) {
-            Arrays.fill(count, 0);
-            sb.setLength(0);
-
-            for(char c: str.toCharArray()) {
-                count[c - 'a']++;
-            }
-
-            for(int i = 0; i < 26; i++) {
-                if(count[i] != 0){
-                    sb.append(i + 'a');
-                    sb.append(count[i]);
-                }
-            }
-
-            String key = sb.toString();
-            if(!map.containsKey(key)) {
-                map.put(key, new ArrayList());
-            }
-
-            map.get(key).add(str);
+    private String embed(String str) {
+        int[] chars = new int[26];
+        for(char c: str.toCharArray()) {
+            chars[c - 'a']++;
         }
 
-        return new ArrayList(map.values());
+        StringBuilder res = new StringBuilder();
+
+        for(int i = 0; i < 26; i++) {
+            if(chars[i] != 0) {
+                res.append((char)(i + 'a'));
+                res.append(chars[i]);
+            }
+        }
+
+        return res.toString();
+    }
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap();
+
+        for(String str : strs) {
+            String embedded = embed(str);
+
+            List<String> list = map.getOrDefault(embedded, new ArrayList());
+
+            list.add(str);
+
+            map.put(embedded, list);
+        }
+
+        List<List<String>> ans = new ArrayList();
+
+        for(String key : map.keySet()) {
+            ans.add(map.get(key));
+        }
+
+        return ans;
     }
 }
