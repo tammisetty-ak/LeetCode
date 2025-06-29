@@ -5,7 +5,7 @@ class Solution {
         }
 
         StringBuilder fraction = new StringBuilder();
-
+        
         if(numerator < 0 ^ denominator < 0) {
             fraction.append("-");
         }
@@ -13,14 +13,13 @@ class Solution {
         long dividend = Math.abs(Long.valueOf(numerator));
         long divisor = Math.abs(Long.valueOf(denominator));
 
-        fraction.append(String.valueOf(dividend / divisor));
-
+        fraction.append(dividend / divisor);
         long remainder = dividend % divisor;
 
         if(remainder == 0) {
             return fraction.toString();
         }
-
+        
         fraction.append(".");
         Map<Long, Integer> map = new HashMap();
         while(remainder != 0) {
@@ -31,7 +30,7 @@ class Solution {
             }
             map.put(remainder, fraction.length());
             remainder *= 10;
-            fraction.append(String.valueOf(remainder / divisor));
+            fraction.append(remainder / divisor);
             remainder %= divisor;
         }
 
