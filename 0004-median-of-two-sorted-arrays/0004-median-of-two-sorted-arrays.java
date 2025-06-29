@@ -22,6 +22,6 @@ class Solution {
             nums3[k++] = nums2[j++];
         }
 
-        return nums3.length % 2 != 0 ? nums3[(m + n) / 2] : (nums3[(m + n) / 2] + nums3[(m + n) / 2] - 1) / 2.0;
+        return nums3.length % 2 != 0 ? nums3[(m + n) / 2] : (nums3[(m + n) / 2] + nums3[((m + n) / 2) - 1]) / 2.0;
     }
 }
