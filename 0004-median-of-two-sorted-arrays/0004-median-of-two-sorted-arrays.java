@@ -1,62 +1,27 @@
 class Solution {
-    private int p1 = 0, p2 = 0;
-
-    private int getMin(int nums1[], int nums2[]) {
-        if(p1 < nums1.length && p2 < nums2.length) {
-            return nums1[p1] < nums2[p2] ? nums1[p1++] : nums2[p2++];
-        }
-        else if (p1 < nums1.length) {
-            return nums1[p1++];
-        }
-        else if (p2 < nums2.length) {
-            return nums2[p2++];
-        }
-        return -1;
-    }
-    
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         int m = nums1.length, n = nums2.length;
 
-        if((m + n) % 2 == 0) {
-            for(int i = 0; i < (m + n) / 2 - 1; i++) {
-                int tmp = getMin(nums1, nums2);
+        int i = 0, j = 0, k = 0;
+        int nums3[] = new int[m + n];
+
+        while(i < m && j < n) {
+            if(nums1[i] < nums2[j]) {
+                nums3[k++] = nums1[i++];
             }
-            return (double) (getMin(nums1, nums2) + getMin(nums1, nums2)) / 2;
-        }   
-        else {
-            for(int i = 0; i < (m + n) / 2; i++) {
-                int tmp = getMin(nums1, nums2);
+            else {
+                nums3[k++] = nums2[j++];
             }
-            return getMin(nums1, nums2);
         }
+        
+        while (i < m) {
+            nums3[k++] = nums1[i++];
+        }
+
+        while(j < n) {
+            nums3[k++] = nums2[j++];
+        }
+
+        return nums3.length % 2 != 0 ? nums3[(m + n) / 2] : (nums3[(m + n) / 2] + nums3[(m + n) / 2] - 1) / 2.0;
     }
 }
-
-/*
-
-n1, n2
-
-if nums1[n1 - 1] < nums2[0] {
-    if((n1 == n2)) -> nums1[n1-1] + nums2[0] / 2 -> res
-
-    if(n1 > n2) {
-        return median(nums1);
-    }
-    else {
-        return median (num2);
-    }
-
-}
-
-else {
-    int i = n1 - 1, j = 0
-    int n = n1 + n2;
-    int[] res = new int[n];
-    while(nums[i] > nums[j]) {
-        res[--n] = nums[i];
-
-        i--;
-        j++;
-    }
-}
-*/
