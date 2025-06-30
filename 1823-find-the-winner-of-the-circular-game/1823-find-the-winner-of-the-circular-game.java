@@ -9,10 +9,11 @@ class Solution {
 
         Stack<Integer> stack = new Stack();
         
-        int i = 0;
-        while(players > 1) {
+        int i = 0, result = 0;
+        while(players >= 1) {
             if(arr[i] != -1) {
                 stack.push(arr[i]);
+                result = arr[i];
             }
             if(stack.size() == k) {
                 stack = new Stack();
@@ -26,12 +27,12 @@ class Solution {
                 i++;
             }
         }
-        int result = 0;
-        for(int j = 0; j < n; j++) {
-            if(arr[j] != -1) {
-                result = arr[j];
-            }
-        }
+        // int result = 0;
+        // for(int j = 0; j < n; j++) {
+        //     if(arr[j] != -1) {
+        //         result = arr[j];
+        //     }
+        // }
 
         return result;
     }
