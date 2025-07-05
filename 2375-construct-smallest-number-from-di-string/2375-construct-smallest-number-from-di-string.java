@@ -5,10 +5,10 @@ class Solution {
 
         for(int index = 0; index <= pattern.length(); index++) {
             stack.push(index + 1);
-
             if(index == pattern.length() || pattern.charAt(index) == 'I') {
-                while(!stack.isEmpty())
+                while(!stack.isEmpty()) {
                     res.append(stack.pop());
+                }
             }
         }
 
