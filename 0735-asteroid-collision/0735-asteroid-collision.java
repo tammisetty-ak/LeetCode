@@ -4,34 +4,33 @@ class Solution {
 
         for(int asteroid : asteroids) {
             boolean alive = true;
+                while(!stack.isEmpty() && stack.peek() > 0 && asteroid < 0) {
+                    int prev = Math.abs(stack.peek());
+                    if(prev < Math.abs(asteroid)) {
+                        stack.pop();
+                    }
+                    else if(prev == Math.abs(asteroid)) {
+                        stack.pop();
+                        alive = false;
+                        break;
 
-            while(!stack.isEmpty() && stack.peek() > 0 && asteroid < 0) {
-                int top = stack.peek();
-
-                if(Math.abs(top) < Math.abs(asteroid)) {
-                    stack.pop();
+                    }
+                    else {
+                        alive = false;
+                        break;
+                    }
                 }
-                else if(Math.abs(top) == Math.abs(asteroid)) {
-                    stack.pop();
-                    alive = false;
-                    break;
-                }
-                else {
-                    alive = false;
-                    break;
-                }
-            }
-
-            if(alive) {
-                stack.push(asteroid);
-            }
+            if(alive) stack.push(asteroid);
         }
 
-        int[] res = new int[stack.size()];
-        for(int i= res.length - 1; i >= 0; i--) {
-            res[i] = stack.pop();
-        }
+       int[] res = new int[stack.size()];
 
-        return res;
+       for(int i = res.length - 1; i >= 0; i--) {
+        res[i] = stack.pop();
+       }
+
+       return res;
+
+        // return intArray;
     }
 }
