@@ -17,7 +17,7 @@ class Solution {
                 }
             }
 
-            List<String> existing =  map.getOrDefault(temp.toString(), new ArrayList());
+            List<String> existing = map.getOrDefault(temp.toString(), new ArrayList());
             existing.add(str);
             map.put(temp.toString(), existing);
         }
