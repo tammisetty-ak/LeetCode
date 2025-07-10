@@ -20,12 +20,7 @@ class Solution {
             map.get(temp.toString()).add(str);
         }
 
-        List<List<String>> res = new ArrayList();
 
-        for(String key: map.keySet()) {
-            res.add(map.get(key));
-        }
-
-        return res;
+        return new ArrayList(map.values());
     }
 }
