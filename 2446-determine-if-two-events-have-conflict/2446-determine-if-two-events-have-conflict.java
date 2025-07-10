@@ -6,6 +6,6 @@ class Solution {
        String end2 = event2[1];
 
 
-       return !(end1.compareTo(start2) < 0 || end2.compareTo(start1) < 0);
+       return end1.compareTo(start2) >= 0 && end2.compareTo(start1) >= 0;
     }
 }
