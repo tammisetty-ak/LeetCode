@@ -1,10 +1,9 @@
 class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
         Map<String, List<String>> map = new HashMap();
-
+        int[] chars = new int[26];
         for(String str: strs) {
-            int[] chars = new int[26];
-
+            Arrays.fill(chars, 0);
             for(int i = 0; i < str.length(); i++) {
                 chars[str.charAt(i) - 'a']++;
             }
@@ -12,9 +11,7 @@ class Solution {
             StringBuilder temp = new StringBuilder();
 
             for(int i = 0; i < 26; i++) {
-                if(chars[i] > 0) {
-                    temp.append(i + 'a').append(chars[i]);
-                }
+                temp.append('#').append(chars[i]);
             }
 
             if(!map.containsKey(temp.toString())) {
