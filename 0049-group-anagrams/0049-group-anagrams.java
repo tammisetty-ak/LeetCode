@@ -1,35 +1,33 @@
 class Solution {
-
-    private String embed(String str) {
-        int[] chars = new int[26];
-        for(char c: str.toCharArray()) {
-            chars[c - 'a']++;
-        }
-
-        StringBuilder res = new StringBuilder();
-
-        for(int i = 0; i < 26; i++) {
-            if(chars[i] != 0) {
-                res.append((char)(i + 'a'));
-                res.append(chars[i]);
-            }
-        }
-
-        return res.toString();
-    }
     public List<List<String>> groupAnagrams(String[] strs) {
         Map<String, List<String>> map = new HashMap();
 
-        for(String str : strs) {
-            String embedded = embed(str);
+        for(String str: strs) {
+            int[] chars = new int[26];
 
-            List<String> list = map.getOrDefault(embedded, new ArrayList());
+            for(int i = 0; i < str.length(); i++) {
+                chars[str.charAt(i) - 'a']++;
+            }
+            
+            StringBuilder temp = new StringBuilder();
 
-            list.add(str);
+            for(int i = 0; i < 26; i++) {
+                if(chars[i] > 0) {
+                    temp.append(i + 'a').append(chars[i]);
+                }
+            }
 
-            map.put(embedded, list);
+            List<String> existing =  map.getOrDefault(temp.toString(), new ArrayList());
+            existing.add(str);
+            map.put(temp.toString(), existing);
         }
 
-        return new ArrayList(map.values());
+        List<List<String>> res = new ArrayList();
+
+        for(String key: map.keySet()) {
+            res.add(map.get(key));
+        }
+
+        return res;
     }
 }
