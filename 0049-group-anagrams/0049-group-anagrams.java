@@ -17,9 +17,10 @@ class Solution {
                 }
             }
 
-            List<String> existing = map.getOrDefault(temp.toString(), new ArrayList());
-            existing.add(str);
-            map.put(temp.toString(), existing);
+            if(!map.containsKey(temp.toString())) {
+                map.put(temp.toString(), new ArrayList());
+            }
+            map.get(temp.toString()).add(str);
         }
 
         List<List<String>> res = new ArrayList();
