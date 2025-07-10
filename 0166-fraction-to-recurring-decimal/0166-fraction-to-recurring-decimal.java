@@ -4,36 +4,34 @@ class Solution {
             return "0";
         }
 
-        StringBuilder fraction = new StringBuilder();
-        
-        if(numerator < 0 ^ denominator < 0) {
-            fraction.append("-");
-        }
+        long divisor = Long.valueOf(numerator);
+        long dividend = Long.valueOf(denominator);
 
-        long dividend = Math.abs(Long.valueOf(numerator));
-        long divisor = Math.abs(Long.valueOf(denominator));
+        StringBuilder res = new StringBuilder();
 
-        fraction.append(dividend / divisor);
-        long remainder = dividend % divisor;
+        res.append(divisor / dividend);
+
+        long remainder = divisor % dividend;
 
         if(remainder == 0) {
-            return fraction.toString();
+            return res.toString();
         }
-        
-        fraction.append(".");
+        res.append(".");
+
         Map<Long, Integer> map = new HashMap();
+
         while(remainder != 0) {
             if(map.containsKey(remainder)) {
-                fraction.insert(map.get(remainder), "(");
-                fraction.append(")");
+                res.insert(map.get(remainder), "(");
+                res.append(")");
                 break;
             }
-            map.put(remainder, fraction.length());
+            map.put(remainder, res.length());
             remainder *= 10;
-            fraction.append(remainder / divisor);
-            remainder %= divisor;
+            res.append(remainder / dividend);
+            remainder %= dividend;
         }
 
-        return fraction.toString();
+        return res.toString();
     }
 }
