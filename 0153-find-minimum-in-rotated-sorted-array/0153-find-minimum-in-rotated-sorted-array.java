@@ -1,7 +1,6 @@
 class Solution {
     public int findMin(int[] nums) {
-        int n = nums.length;
-        int low = 0, high = n - 1;
+        int low = 0, high = nums.length - 1;
 
         while(low < high) {
             int mid = low + (high - low) / 2;
@@ -11,39 +10,37 @@ class Solution {
             else {
                 high = mid;
             }
+            
         }
+
         return nums[low];
     }
 }
 
+// 4567012
+
+// l - 0, h - 3
+// m - 1
+
+// 5 > a[l] 4 l - 2
+// l - 2 h - 3
+// m - 2
+// 6 > 5 l - 3
+
+// l - 3 h - 3
+// m - 3
+// 7 > 6
+// l - 4
+
+
 // 3 4 5 1 2
-/*
-l - 0, h - 4
 
-m - 2
+// l - 0 h - 5
 
-3 < 5 -> l - m + 1 -> 3
+// m - 2
+// 5 > 3
+// l = 4 h - 5
 
-l - 3 h - 4
+// m - 4
 
-m - 3
 
-1 < 1 -> h - m -> 3
-*/
-
-/*
-
-4 5 6 7 0 1 2
-
-l - 0, h - 6
-
-m - 3
-
-n[l] < n[m] -> 4 < 7 -> l -> 4
-
-l - 4, h - 6
-
-m - 5
-
-n[l] < n[m] -> 0 < 1 -> 
-*/
