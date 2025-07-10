@@ -33,7 +33,7 @@ class LRUCache {
         ListNode node = map.get(key);
         removeNode(node);
         addNode(node);
-        return node.key;
+        return node.val;
     }
     
     public void put(int key, int value) {
