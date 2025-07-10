@@ -1,43 +1,44 @@
 class Solution {
     public int maxSumDivThree(int[] nums) {
-        List<Integer> rem0 = new ArrayList();
-        List<Integer> rem1 = new ArrayList();
-        List<Integer> rem2 = new ArrayList();
-
+        int min1a = Integer.MAX_VALUE, min1b = Integer.MAX_VALUE;
+        int min2a = Integer.MAX_VALUE, min2b = Integer.MAX_VALUE;
         int sum = 0;
 
-        for(int num: nums) {
+        for(int num : nums) {
             sum += num;
-            if(num % 3 == 0) {
-                rem0.add(num);
+            if(num % 3 == 1) {
+                if(num < min1a) {
+                    min1b = min1a;
+                    min1a = num;
+                }
+                else if(num < min1b) {
+                    min1b = num;
+                }
             }
-            else if(num % 3 == 1) {
-                rem1.add(num);
-            }
-            else {
-                rem2.add(num);
+            else if(num % 3 == 2) {
+                if(num < min2a) {
+                    min2b = min2a;
+                    min2a = num;
+                }
+                else if(num < min2b) {
+                    min2b = num;
+                }
             }
         }
-
-        Collections.sort(rem1);
-        Collections.sort(rem2);
 
         if(sum % 3 == 0) {
             return sum;
         }
         
-        int result = 0; 
         if(sum % 3 == 1) {
-            int op1 = rem1.size() > 0 ? sum - rem1.get(0): 0;
-            int op2 = rem2.size() > 1 ? sum - rem2.get(0) - rem2.get(1) : 0;
-            result = Math.max(op1, op2);
+            int op1 = min1a == Integer.MAX_VALUE ? 0 : sum - min1a;
+            int op2 = min2a != Integer.MAX_VALUE && min2b != Integer.MAX_VALUE ? sum - min2a - min2b : 0;
+            return Math.max(op1, op2);
         }
         else {
-            int op1 = rem2.size() > 0 ? sum - rem2.get(0) : 0;
-            int op2 = rem1.size() > 1 ? sum - rem1.get(0) - rem1.get(1) : 0;
-            result = Math.max(op1, op2);
+            int op1 = min1a != Integer.MAX_VALUE && min1b != Integer.MAX_VALUE ? sum - min1a - min1b : 0;
+            int op2 = min2a == Integer.MAX_VALUE ? 0 : sum - min2a;
+            return Math.max(op1, op2);
         }
-
-        return result;
     }
 }
