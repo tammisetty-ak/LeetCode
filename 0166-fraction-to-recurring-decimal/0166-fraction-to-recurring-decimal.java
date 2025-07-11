@@ -4,21 +4,27 @@ class Solution {
             return "0";
         }
 
-        long divisor = Long.valueOf(numerator);
-        long dividend = Long.valueOf(denominator);
-
         StringBuilder res = new StringBuilder();
 
-        res.append(divisor / dividend);
+        if((numerator < 0) ^ (denominator < 0)) {
+            res.append("-");
+        }
 
-        long remainder = divisor % dividend;
+        long dividend = Math.abs(Long.valueOf(numerator));
+        long divisor = Math.abs(Long.valueOf(denominator));
+
+        res.append(String.valueOf(dividend / divisor));
+
+        long remainder = dividend % divisor;
 
         if(remainder == 0) {
             return res.toString();
         }
+
         res.append(".");
 
-        Map<Long, Integer> map = new HashMap();
+        HashMap<Long, Integer> map = new HashMap();
+
 
         while(remainder != 0) {
             if(map.containsKey(remainder)) {
@@ -28,8 +34,8 @@ class Solution {
             }
             map.put(remainder, res.length());
             remainder *= 10;
-            res.append(remainder / dividend);
-            remainder %= dividend;
+            res.append(remainder / divisor);
+            remainder %= divisor;
         }
 
         return res.toString();
