@@ -1,12 +1,12 @@
 class Solution {
     public int search(int[] nums, int target) {
-        int left = 0, right = nums.length - 1;
-
+        int n = nums.length;
+        int left = 0, right = n - 1;
 
         while(left <= right) {
             int mid = left + (right - left) / 2;
 
-            if(nums[mid] > nums[nums.length - 1]) {
+            if(nums[mid] > nums[n - 1]) {
                 left = mid + 1;
             }
             else {
@@ -14,28 +14,24 @@ class Solution {
             }
         }
 
-        int found = binarySearch(0, left - 1, nums, target);
-
-        if(found != -1) {
-            return found;
+        int ans = binaryS(0, left, nums, target);
+        if(ans != -1) {
+            return ans;
         }
-
-        return binarySearch(left, nums.length - 1, nums, target);
-
+        return binaryS(left, n - 1, nums, target);
     }
 
-    private int binarySearch(int left, int right, int[] nums, int target) {
+    private int binaryS(int left, int right, int[] nums, int target) {
         while(left <= right) {
-            int mid = left + (right - left) / 2;
-
+            int mid = (left + right) / 2;
             if(nums[mid] == target) {
                 return mid;
             }
-            else if (nums[mid] > target) {
-                right = mid - 1;
+            else if(nums[mid] < target) {
+                left = mid + 1;
             }
             else {
-                left = mid + 1;
+                right = mid - 1;
             }
         }
         return -1;
