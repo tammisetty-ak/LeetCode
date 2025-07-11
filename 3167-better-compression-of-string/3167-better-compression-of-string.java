@@ -12,7 +12,7 @@ class Solution {
                 val = 0;
             }
             else {
-                val = val * 10 + (c - '0');
+                val = val * 10 + Integer.parseInt(String.valueOf(c));
             }
         }
 
