@@ -17,22 +17,21 @@ class Solution {
 
     int moves;
 
-    private int dfs(TreeNode curr) {
-        if(curr == null) {
+    private int distributeCoinsHelper(TreeNode root) {
+        if(root == null) {
             return 0;
         }
 
-        int leftCoins = dfs(curr.left);
-        int rightCoins = dfs(curr.right);
+        int leftCoins = distributeCoinsHelper(root.left);
+        int rightCoins = distributeCoinsHelper(root.right);
 
         moves += Math.abs(leftCoins) + Math.abs(rightCoins);
 
-        return curr.val - 1 + leftCoins + rightCoins;
+        return root.val - 1 + leftCoins + rightCoins;
     }
-    
     public int distributeCoins(TreeNode root) {
         moves = 0;
-        dfs(root);
+        distributeCoinsHelper(root);
         return moves;
     }
 }
