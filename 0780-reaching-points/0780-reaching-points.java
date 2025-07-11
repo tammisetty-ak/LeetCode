@@ -13,14 +13,6 @@ class Solution {
             return true;
         }
 
-        return (sy == ty && sx <= tx && (tx - sx) % sy == 0);
+        return (sy == ty && sy <= tx && (tx - sx) % sy == 0);
     }
 }
-/*
-
-sx, sy -> tx, ty
-
-sy + k * sx => ty
-
-sx = ty - sy / k
-*/
