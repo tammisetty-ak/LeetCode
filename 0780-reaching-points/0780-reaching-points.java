@@ -1,6 +1,6 @@
 class Solution {
     public boolean reachingPoints(int sx, int sy, int tx, int ty) {
-        while(sx < tx && sy < ty) {
+        while(tx > sx && ty > sy) {
             if(tx > ty) {
                 tx -= ty;
             }
@@ -9,13 +9,18 @@ class Solution {
             }
         }
 
-        if(sx == tx && sy == ty) {
-            return true;
-        }
-
         if(sx == tx && sy <= ty && (ty - sy) % sx == 0) {
             return true;
         }
-        return sy == ty && sx <= tx && (tx - sx) % sy == 0;
+
+        return (sy == ty && sx <= tx && (tx - sx) % sy == 0);
     }
 }
+/*
+
+sx, sy -> tx, ty
+
+sy + k * sx => ty
+
+sx = ty - sy / k
+*/
