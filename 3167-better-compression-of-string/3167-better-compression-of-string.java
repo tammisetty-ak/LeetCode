@@ -6,13 +6,13 @@ class Solution {
 
         for(char c: compressed.toCharArray()) {
             if(!Character.isDigit(c)) {
-                if(store != '\0' && store != c)
+                if(store != '\0')
                     chars[store - 'a'] += val;
                 store = c;
                 val = 0;
             }
             else {
-                val = val * 10 + Integer.parseInt(String.valueOf(c));
+                val = val * 10 + (c - '0');
             }
         }
 
