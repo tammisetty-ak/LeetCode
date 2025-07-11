@@ -2,11 +2,15 @@ class Solution {
     public boolean reachingPoints(int sx, int sy, int tx, int ty) {
         while(sx < tx && sy < ty) {
             if(tx > ty) {
-                tx %= ty;
+                tx -= ty;
             }
             else {
-                ty %= tx;
+                ty -= tx;
             }
+        }
+
+        if(sx == tx && sy == ty) {
+            return true;
         }
 
         if(sx == tx && sy <= ty && (ty - sy) % sx == 0) {
