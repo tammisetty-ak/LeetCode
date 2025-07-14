@@ -1,5 +1,10 @@
 class Solution {
     public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+
+        if(n == 1) {
+            return List.of(0);
+        }
+        
         var graph = new ArrayList<ArrayList<Integer>>();
         int[] indegree = new int[n];
 
