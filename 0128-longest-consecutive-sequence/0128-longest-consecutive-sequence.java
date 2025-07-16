@@ -1,46 +1,26 @@
 class Solution {
     public int longestConsecutive(int[] nums) {
-        if(nums.length == 0) {
-            return 0;
-        }
-        HashMap<Integer, int[]> map = new HashMap();
-        HashMap<Integer, Boolean> seen = new HashMap();
+        HashSet<Integer> set = new HashSet();
 
-        for(int num : nums) {
-            map.putIfAbsent(num, new int[]{num - 1, num + 1});
-            seen.putIfAbsent(num, false);
+        for(int n : nums) {
+            set.add(n);
         }
 
-        int count = 1;
+        int longStreak = 0;
 
-        Queue<Integer> queue = new LinkedList<>();
-        int maxCount = 1;
+        for(int n : set) {
+            if(!set.contains(n - 1)) {
+                int currStreak = 1;
 
-        for(int num : nums) {
-            queue.offer(num);
-            count = 1;
-            while(!queue.isEmpty()) {
-                int temp = queue.poll();
-                if(map.containsKey(temp) && !seen.get(temp)) {
-                    for(int neighbor : map.get(temp)) {
-                        if(map.containsKey(neighbor) && !seen.get(neighbor)) {
-                            count++;
-                            maxCount = Math.max(count, maxCount);
-                            seen.put(temp, true);
-                            queue.offer(neighbor);
-
-                        }
-                    }
+                while(set.contains(n + 1)) {
+                    currStreak++;
+                    n += 1;
                 }
+
+                longStreak = Math.max(longStreak, currStreak);
             }
         }
-        return maxCount;
+
+        return longStreak;
     }
 }
-
-// 4 [3, 5] c - 1
-// 100 [99, 101] c - 1
-//200 [199, 201] c - 1
-//1 [0, 2] c - 1
-//3 [2, 4] c - 1, c - 2
-//2 [1, 3] c - 1 c - 2 c - 3 c - 4
