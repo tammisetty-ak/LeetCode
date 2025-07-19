@@ -14,8 +14,6 @@ class Solution {
                 right--;
             }
             else {
-                System.out.println(s.charAt(left));
-                System.out.println(s.charAt(right));
                 return false;
             }
                 
