@@ -3,22 +3,24 @@ class Solution {
         int left = 0, right = s.length() - 1;
 
         while(left < right) {
-            while(left < right && !Character.isLetterOrDigit(s.charAt(left))) {
+            if(!Character.isLetterOrDigit(s.charAt(left))) {
                 left++;
             }
-            while(left < right && !Character.isLetterOrDigit(s.charAt(right))) {
+            else if(!Character.isLetterOrDigit(s.charAt(right))) {
                 right--;
             }
-
-            if(Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right))) {
-                return false;
+            else if(Character.toLowerCase(s.charAt(left)) == Character.toLowerCase(s.charAt(right))) {
+                left++;
+                right--;
             }
             else {
-                left++;
-                right--;
+                System.out.println(s.charAt(left));
+                System.out.println(s.charAt(right));
+                return false;
             }
-        }
+                
+            }
 
-        return true;
+            return true;
+        }
     }
-}
