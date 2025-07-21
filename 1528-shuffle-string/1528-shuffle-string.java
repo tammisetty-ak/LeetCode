@@ -7,12 +7,6 @@ class Solution {
             res[indices[i]] = s.charAt(i);
         }
 
-        StringBuilder sb = new StringBuilder();
-
-        for(int i = 0; i < s.length(); i++) {
-            sb.append(res[i]);
-        }
-
-        return sb.toString();
+        return String.valueOf(res);
     }
 }
