@@ -43,10 +43,7 @@ class Solution {
                     queue.offer(curr.right);
                 }
 
-                if(size == 0) {
-                    curr.next = null;
-                }
-                else {
+                if(size != 0) {
                     curr.next = queue.peek();
                 }
             }
