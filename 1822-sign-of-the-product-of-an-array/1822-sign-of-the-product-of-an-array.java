@@ -6,10 +6,7 @@ class Solution {
             if(num == 0) {
                 return 0;
             }
-            else if(num > 0) {
-                x *= 1;
-            }
-            else {
+            else if(num < 0) {
                 x *= -1;
             }
         }
