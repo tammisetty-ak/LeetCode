@@ -1,25 +1,32 @@
 class Solution {
     public int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {
-    int[][][] memo = new int[m][n][maxMove + 1];
-    for (int[][] layer : memo)
-        for (int[] row : layer)
-            Arrays.fill(row, -1);
-    return dfs(m, n, maxMove, startRow, startColumn, memo);
-}
+        int[][][] dp = new int[maxMove + 1][m][n];
+        int MOD = 1000000007;
 
-private int dfs(int m, int n, int moves, int i, int j, int[][][] memo) {
-    if (i < 0 || i >= m || j < 0 || j >= n) return 1;
-    if (moves == 0) return 0;
-    if (memo[i][j][moves] != -1) return memo[i][j][moves];
+        dp[0][startRow][startColumn] = 1;
+        int res = 0;
 
-    int res = 0, MOD = 1000000007;
-    res = (res + dfs(m, n, moves - 1, i - 1, j, memo)) % MOD;
-    res = (res + dfs(m, n, moves - 1, i + 1, j, memo)) % MOD;
-    res = (res + dfs(m, n, moves - 1, i, j - 1, memo)) % MOD;
-    res = (res + dfs(m, n, moves - 1, i, j + 1, memo)) % MOD;
+        int[] dx = {0, 0, 1, -1};
+        int[] dy = {1, -1, 0, 0};
 
-    memo[i][j][moves] = res;
-    return res;
-}
+        for(int move = 1; move <= maxMove; move++) {
+            for(int i = 0; i < m; i++) {
+                for(int j = 0; j < n; j++) {
+                    if(dp[move - 1][i][j] > 0) {
+                        for(int d = 0; d < 4; d++) {
+                                int ni = i + dx[d], nj = j + dy[d];
+                                if(ni >= 0 && ni < m && nj >= 0 && nj < n) {
+                                    dp[move][ni][nj] = (dp[move][ni][nj] + dp[move - 1][i][j]) % MOD;
+                                }
+                                else {
+                                    res = (res + dp[move - 1][i][j]) % MOD;
+                                }
+                        }
+                    }
+                }
+            }
+        }
 
+        return res;
+    }
 }
