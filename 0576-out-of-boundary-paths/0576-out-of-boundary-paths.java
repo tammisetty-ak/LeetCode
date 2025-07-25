@@ -1,32 +1,36 @@
 class Solution {
+    int[] dx = {0, 0, 1, -1};
+    int[] dy = {1, -1, 0, 0};
+    int MOD = 1000000007;
+    
     public int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {
-        int[][][] dp = new int[maxMove + 1][m][n];
-        int MOD = 1000000007;
+        Integer[][][] memo = new Integer[maxMove + 1][m][n];
 
-        dp[0][startRow][startColumn] = 1;
-        int res = 0;
+        return findPathsHelper(m, n, maxMove, startRow, startColumn, memo);
+    }
 
-        int[] dx = {0, 0, 1, -1};
-        int[] dy = {1, -1, 0, 0};
-
-        for(int move = 1; move <= maxMove; move++) {
-            for(int i = 0; i < m; i++) {
-                for(int j = 0; j < n; j++) {
-                    if(dp[move - 1][i][j] > 0) {
-                        for(int d = 0; d < 4; d++) {
-                                int ni = i + dx[d], nj = j + dy[d];
-                                if(ni >= 0 && ni < m && nj >= 0 && nj < n) {
-                                    dp[move][ni][nj] = (dp[move][ni][nj] + dp[move - 1][i][j]) % MOD;
-                                }
-                                else {
-                                    res = (res + dp[move - 1][i][j]) % MOD;
-                                }
-                        }
-                    }
-                }
-            }
+    private int findPathsHelper(int m, int n, int maxMove, int startRow, int startColumn, Integer[][][] memo) {
+        if(startRow < 0 || startRow >= m || startColumn < 0 || startColumn >= n) {
+            return 1;
         }
 
-        return res;
+        if(maxMove == 0) {
+            return 0;
+        }
+
+        if(memo[maxMove][startRow][startColumn] != null) {
+            return memo[maxMove][startRow][startColumn];
+        }
+
+        int total = 0;
+ 
+        for(int d = 0; d < 4; d++) {
+            int nx = startRow + dx[d], ny = startColumn + dy[d];
+            total = (total + findPathsHelper(m, n, maxMove - 1, nx, ny, memo)) % MOD;
+        }
+
+        memo[maxMove][startRow][startColumn] = total;
+
+        return total;
     }
 }
