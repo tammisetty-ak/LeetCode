@@ -34,10 +34,10 @@ class Solution {
 
             while(len-- > 0) {
                 TreeNode node = queue.poll();
-                if(node != null) {
-                    sum += node.val;
+                                    sum += node.val;
+
+                if(node.left != null) {
                     queue.offer(node.left);
-                    queue.offer(node.right);
                 }
             }
 
