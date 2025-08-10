@@ -1,6 +1,6 @@
 class Solution {
     public int[][] highFive(int[][] items) {
-        Map<Integer, PriorityQueue<Integer>> studentTop5 = new HashMap();
+        TreeMap<Integer, PriorityQueue<Integer>> studentTop5 = new TreeMap();
         for(int[] item : items) {
             if(!studentTop5.containsKey(item[0])) {
                 studentTop5.put(item[0], new PriorityQueue<Integer>());
