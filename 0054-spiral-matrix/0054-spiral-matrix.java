@@ -1,11 +1,8 @@
 class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
-        int rows = matrix.length;
-        int cols = matrix[0].length;
-        int up = 0;
-        int left = 0;
-        int right = cols - 1;
-        int down = rows - 1;
+        int rows = matrix.length, cols = matrix[0].length;
+
+        int left = 0, right = cols - 1, up = 0, down = rows - 1;
 
         List<Integer> res = new ArrayList<>();
 
@@ -29,11 +26,13 @@ class Solution {
                     res.add(matrix[row][left]);
                 }
             }
+
             left++;
             right--;
             up++;
             down--;
         }
+
         return res;
     }
 }
