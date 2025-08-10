@@ -4,7 +4,7 @@ class Solution {
         int ans = 0;
         for(int i = 0, j = 0; j < s.length(); j++) {
             if(map.containsKey(s.charAt(j))) {
-                i = Math.max(map.get(s.charAt(j)) + 1, i);
+                i = map.get(s.charAt(j)) + 1;
             } 
             ans = Math.max(ans, j - i + 1);
             map.put(s.charAt(j), j);
@@ -13,3 +13,11 @@ class Solution {
 
     }
 }
+
+//abbc
+
+//a - 0
+// b - 1
+
+// b - i-> 2, 0
+//
