@@ -1,4 +1,5 @@
 class Solution {
+    private static HashSet<Integer> set = new HashSet(Arrays.asList(4, 16, 37, 58, 89, 145, 42, 20));
 
     private int getN(int n) {
         int d = 0, totalSum = 0;
@@ -11,10 +12,8 @@ class Solution {
     }
 
     public boolean isHappy(int n) {
-        HashSet<Integer> set = new HashSet();
 
         while(n != 1 && !set.contains(n)) {
-            set.add(n);
             n = getN(n);
         }
 
