@@ -16,11 +16,6 @@ class Solution {
         while(i < intervals.length) {
             res.add(intervals[i++]);
         }
-        int[][] ans = new int[res.size()][2];
-
-        for(int j = 0; j < res.size(); j++) {
-            ans[j] = res.get(j);
-        }
-        return ans;
+        return res.toArray(new int[res.size()][2]);
     }
 }
