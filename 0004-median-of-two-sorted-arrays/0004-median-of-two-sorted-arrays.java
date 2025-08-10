@@ -9,16 +9,16 @@ class Solution {
         int left = 0, right = m;
 
         while(left <= right) {
-            int partitionA = (left + right) / 2; // 0
-            int partitionB = (m + n + 1) / 2 - partitionA; // 1
+            int partitionA = (left + right) / 2;
+            int partitionB = (m + n + 1) / 2 - partitionA;
 
-            int maxLeftA = (partitionA == 0) ? Integer.MIN_VALUE : nums1[partitionA - 1]; // min
-            int minRightA = (partitionA == m) ? Integer.MAX_VALUE : nums1[partitionA]; // 1
-            int maxLeftB = (partitionB == 0) ? Integer.MIN_VALUE : nums2[partitionB - 1]; // 1
-            int minRightB = (partitionB == n) ? Integer.MAX_VALUE : nums2[partitionB]; // max
+            int maxLeftA = partitionA == 0 ? Integer.MIN_VALUE : nums1[partitionA - 1] ;
+            int minRightA = partitionA == m ? Integer.MAX_VALUE : nums1[partitionA];
+            int maxLeftB = partitionB == 0 ? Integer.MIN_VALUE : nums2[partitionB - 1];
+            int minRightB = partitionB == n ? Integer.MAX_VALUE : nums2[partitionB];
 
-            if(maxLeftA < minRightB && maxLeftB < minRightA) { // min < 1 √ min < 1 
-                if((m + n) % 2 == 0) { 
+            if(maxLeftA <= minRightB && maxLeftB <= minRightA) {
+                if((m + n) % 2 == 0) {
                     return (Math.max(maxLeftA, maxLeftB) + Math.min(minRightA, minRightB)) / 2.0;
                 }
                 else {
@@ -33,6 +33,6 @@ class Solution {
             }
         }
 
-        return 0.0;
+        return -1.0;
     }
 }
