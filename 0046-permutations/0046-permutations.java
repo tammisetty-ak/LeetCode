@@ -1,5 +1,5 @@
 class Solution {
-    private void backtrack(int[] nums, List<Integer> curr, List<List<Integer>> res) {
+    private void backtrack(int[] nums, LinkedList<Integer> curr, List<List<Integer>> res) {
         if(curr.size() == nums.length) {
             res.add(new ArrayList<>(curr));
             return;
@@ -8,15 +8,15 @@ class Solution {
         for(int i = 0; i < nums.length; i++) {
             if(!curr.contains(nums[i]))
             {
-                curr.add(nums[i]);
+                curr.addLast(nums[i]);
                 backtrack(nums, curr, res);
-                curr.remove(curr.size() - 1);
+                curr.removeLast();
             }
         }
     }
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> res = new ArrayList();
-        backtrack(nums, new ArrayList<Integer>(), res);
+        backtrack(nums, new LinkedList<Integer>(), res);
         return res;
     }
 }
