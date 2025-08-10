@@ -1,30 +1,30 @@
 class Solution {
     public int[][] highFive(int[][] items) {
-        HashMap<Integer, Queue<Integer>> studentIdToScoresMap = new HashMap();
-
-        for(int[] item: items) {
-            int studentId = item[0];
-            if(!studentIdToScoresMap.containsKey(studentId)) {
-                studentIdToScoresMap.put(studentId, new PriorityQueue<Integer>());
+        Map<Integer, PriorityQueue<Integer>> studentTop5 = new HashMap();
+        for(int[] item : items) {
+            if(!studentTop5.containsKey(item[0])) {
+                studentTop5.put(item[0], new PriorityQueue<Integer>());
             }
-            Queue<Integer> minHeap = studentIdToScoresMap.get(studentId);
-            minHeap.offer(item[1]);
-            if(minHeap.size() > 5) {
-                minHeap.poll();
+            PriorityQueue<Integer> queue = studentTop5.get(item[0]);
+            queue.offer(item[1]);
+            if(queue.size() > 5) {
+                queue.poll();
             }
         }
         
-        int[][] res = new int[studentIdToScoresMap.size()][2];
-        int index = 0, sum = 0;
-        for(int studentId: studentIdToScoresMap.keySet()) {
-            res[index][0] = studentId;
-            sum = 0;
-            Queue<Integer> minHeap = studentIdToScoresMap.get(studentId);
-            while(!minHeap.isEmpty()) {
-                sum += minHeap.poll();
+        int[][] res = new int[studentTop5.size()][2];
+        int i = 0;
+
+        for(Map.Entry<Integer, PriorityQueue<Integer>> entry: studentTop5.entrySet()) {
+            int studentId = entry.getKey();
+            PriorityQueue<Integer> marks = entry.getValue();
+            int sum = 0;
+            while(!marks.isEmpty()) {
+                sum += marks.poll();
             }
-            res[index][1] = sum / 5;
-            index++;
+            res[i][0] = studentId;
+            res[i][1] = sum / 5;
+            i++;
         }
 
         return res;
