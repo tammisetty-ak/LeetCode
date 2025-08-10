@@ -1,65 +1,65 @@
 class LRUCache {
-    
-    class Node{
+
+    public class Node {
         int key;
-        int val;
+        int value;
         Node next;
         Node prev;
 
-        public Node(int key, int val) {
+        public Node(int key, int value) {
             this.key = key;
-            this.val = val;
+            this.value = value;
         }
-
     }
 
     Node head, tail;
     int capacity;
-    Map<Integer, Node> keyNodeMap;
+    HashMap<Integer, Node> keyNode;
 
     public LRUCache(int capacity) {
-        keyNodeMap = new HashMap();
         head = new Node(-1, -1);
         tail = new Node(-1, -1);
+        keyNode = new HashMap<Integer, Node>();
         head.next = tail;
         tail.prev = head;
         this.capacity = capacity;
     }
     
     public int get(int key) {
-        if(!keyNodeMap.containsKey(key)) {
+        if(!keyNode.containsKey(key)) {
             return -1;
         }
-        removeNode(keyNodeMap.get(key));
-        addNode(keyNodeMap.get(key));
-        return keyNodeMap.get(key).val;
-    }
-    
-    public void put(int key, int value) {
-        if(keyNodeMap.containsKey(key)) {
-            removeNode(keyNodeMap.get(key));
-        }
-        Node node = new Node(key, value);
-        keyNodeMap.put(key, node);
-        addNode(node);
-        if(keyNodeMap.size() > capacity) {
-            Node nodeToBeDeleted = head.next;
-            removeNode(nodeToBeDeleted);
-            keyNodeMap.remove(nodeToBeDeleted.key);
-        }
-    }
-
-    private void addNode(Node node) {
-        Node temp = tail.prev;
-        node.next = tail;
-        node.prev = temp;
-        temp.next = node;
-        tail.prev = node;
+        Node node = keyNode.get(key);
+        removeNode(node);
+        add(node);
+        return node.value;
     }
 
     private void removeNode(Node node) {
         node.next.prev = node.prev;
         node.prev.next = node.next;
+    }
+    
+    public void put(int key, int value) {
+        if(keyNode.containsKey(key)) {
+            removeNode(keyNode.get(key));
+        }
+        Node node = new Node(key, value);
+        add(node);
+        keyNode.put(key, node);
+        if(keyNode.size() > capacity) {
+            Node nodeToBeDeleted = head.next;
+            removeNode(nodeToBeDeleted);
+            keyNode.remove(nodeToBeDeleted.key);
+        }
+    }
+
+    private void add(Node node) {
+        Node prevTail = tail.prev;
+        node.prev = prevTail;
+        node.next = tail;
+        tail.prev = node;
+        prevTail.next = node;
     }
 }
 
