@@ -1,8 +1,8 @@
 class Solution {
     public int firstUniqChar(String s) {
         int[] chars = new int[26];
-        for(int i = 0; i < s.length(); i++) {
-            chars[s.charAt(i) - 'a']++;
+        for(char c : s.toCharArray()) {
+            chars[c - 'a']++;
         }
 
         for(int i = 0; i < s.length(); i++) {
@@ -10,7 +10,6 @@ class Solution {
                 return i;
             }
         }
-
         return -1;
     }
 }
