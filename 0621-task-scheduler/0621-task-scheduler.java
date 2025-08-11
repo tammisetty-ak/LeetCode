@@ -1,25 +1,24 @@
 class Solution {
     public int leastInterval(char[] tasks, int n) {
         int[] charCounts = new int[26];
-        for(char task: tasks) {
-            charCounts[task - 'A']++;
-        }
 
-        int res = 0;
+        for(char c : tasks) {
+            charCounts[c - 'A']++;
+        }
 
         PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>(Collections.reverseOrder());
-        for(int charCount: charCounts) {
-            if(charCount > 0) {
-                maxHeap.offer(charCount);
+
+        for(int i = 0; i < 26; i++) {
+            if(charCounts[i] != 0) {
+                maxHeap.offer(charCounts[i]);
             }
         }
-
+        int res = 0;
         while(!maxHeap.isEmpty()) {
             int cycle = n + 1;
 
             int taskCount = 0;
-            
-            List<Integer> store = new ArrayList();
+            ArrayList<Integer> store = new ArrayList();
 
             while(cycle > 0 && !maxHeap.isEmpty()) {
                 int task = maxHeap.poll();
@@ -30,13 +29,12 @@ class Solution {
                 cycle--;
             }
 
-            for(int updatedTask : store) {
+            for(int updatedTask: store) {
                 maxHeap.offer(updatedTask);
             }
 
-            res += maxHeap.isEmpty() ? taskCount : n + 1;
+            res += maxHeap.isEmpty()? taskCount : n + 1;
         }
-
         return res;
     }
 }
