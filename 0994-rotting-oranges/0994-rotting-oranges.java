@@ -1,6 +1,6 @@
 class Solution {
     public int orangesRotting(int[][] grid) {
-        Queue<Pair<Integer, Integer>> queue = new LinkedList();
+        Queue<int[]> queue = new LinkedList();
         int m = grid.length;
         int n = grid[0].length;
         int freshOranges = 0;
@@ -8,7 +8,7 @@ class Solution {
         for(int i = 0; i < m; i++) {
             for(int j = 0; j < n; j++) {
                 if(grid[i][j] == 2) {
-                    queue.offer(new Pair(i, j));
+                    queue.offer(new int[]{i, j});
                 }
                 else if(grid[i][j] == 1){
                     freshOranges++;
@@ -22,10 +22,10 @@ class Solution {
             int len = queue.size();
             boolean rotten = false;
             while(len-- > 0) {
-                Pair<Integer, Integer> pair = queue.poll();
+                int[] pair = queue.poll();
 
-                int row = pair.getKey();
-                int col = pair.getValue();
+                int row = pair[0];
+                int col = pair[1];
 
                 for(int[] d : directions) {
                     int neighborRow = d[0] + row;
@@ -36,7 +36,7 @@ class Solution {
                             grid[neighborRow][neighborCol] = 2;
                             freshOranges--;
                             rotten = true;
-                            queue.offer(new Pair(neighborRow, neighborCol));
+                            queue.offer(new int[]{neighborRow, neighborCol});
                         }
                     }
 
