@@ -11,13 +11,27 @@ class Solution {
                 sub.add(num);
             }
             else {
-                int j = 0;
-                while(sub.get(j) < num) {
-                    j++;
-                }
+                int j = binarySearch(num, sub);
                 sub.set(j, num);
             }
         }
         return sub.size();
+    }
+
+    private int binarySearch(int num, ArrayList<Integer> sub) {
+        int left = 0, right = sub.size() - 1;
+        while(left < right) {
+            int mid = (left + right) / 2;
+            if(sub.get(mid) == num) {
+                return mid;
+            }
+            else if(sub.get(mid) < num) {
+                left = mid + 1;
+            }
+            else {
+                right = mid;
+            }
+        }
+        return left;
     }
 }
