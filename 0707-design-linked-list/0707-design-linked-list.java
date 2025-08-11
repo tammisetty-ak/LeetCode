@@ -10,7 +10,7 @@ class MyLinkedList {
         // if(linkedList.isEmpty()) {
         //     index = 0;
         // }
-        if (linkedList.size() <= index) {
+        if (index < 0 || linkedList.size() <= index) {
             return -1;
         }
         return linkedList.get(index);
