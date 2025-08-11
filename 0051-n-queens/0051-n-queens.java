@@ -1,61 +1,51 @@
 class Solution {
-    private int size;
-    private List<List<String>> solutions = new ArrayList<List<String>>();
-    
+    List<List<String>> res;
+    int size;
+
     public List<List<String>> solveNQueens(int n) {
+        res = new ArrayList();
         size = n;
-        char emptyBoard[][] = new char[size][size];
+        char[][] emptyBoard = new char[n][n];
         for(int i = 0; i < n; i++) {
-            for(int j = 0; j < n; j++) {
-                emptyBoard[i][j] = '.';
-            }
+            Arrays.fill(emptyBoard[i], '.');
         }
 
-        backtrack(0, new HashSet<>(), new HashSet<>(), new HashSet<>(), emptyBoard);
-        return solutions;
+        backtrack(0, new HashSet<Integer>(), new HashSet<Integer>(), new HashSet<Integer>(), emptyBoard);
+        return res;
     }
 
-
-    private List<String> createBoard(char[][] state) {
+    private void addRes(char[][] emptyBoard) {
         List<String> board = new ArrayList<>();
-        for(int row = 0; row < size; row++) {
-            String current_row = new String(state[row]);
-            board.add(current_row);
+        for(int i = 0; i < size; i++) {
+            board.add(new String(emptyBoard[i]));
         }
-
-        return board;
+        res.add(board);
     }
 
-
-    private void backtrack(
-        int row, 
-        Set<Integer> diagonals,
-        Set<Integer> antiDiagonals,
-        Set<Integer> cols,
-        char[][] state
-    ) {
+    void backtrack(int row, HashSet<Integer> cols, HashSet<Integer> diagonals, HashSet<Integer> antiDiagonals, char[][] emptyBoard) {
         if(row == size) {
-            solutions.add(createBoard(state));
+            addRes(emptyBoard);
+            return;
         }
 
         for(int col = 0; col < size; col++) {
             int currDiagonal = row - col;
             int currAntiDiagonal = row + col;
-            if(cols.contains(col) || diagonals.contains(currDiagonal) || antiDiagonals.contains(currAntiDiagonal)) {
+            if(diagonals.contains(currDiagonal) || antiDiagonals.contains(currAntiDiagonal) || cols.contains(col)) {
                 continue;
             }
 
             cols.add(col);
-            diagonals.add(currDiagonal);
             antiDiagonals.add(currAntiDiagonal);
-            state[row][col] = 'Q';
-
-            backtrack(row + 1, diagonals, antiDiagonals, cols, state);
+            diagonals.add(currDiagonal);
+            emptyBoard[row][col] = 'Q';
+        
+            backtrack(row + 1, cols, diagonals, antiDiagonals, emptyBoard);
 
             cols.remove(col);
-            diagonals.remove(currDiagonal);
             antiDiagonals.remove(currAntiDiagonal);
-            state[row][col] = '.';
+            diagonals.remove(currDiagonal);
+            emptyBoard[row][col] = '.';
         }
     }
 }
