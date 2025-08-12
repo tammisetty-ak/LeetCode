@@ -8,21 +8,21 @@ class Solution {
                 chars[c - 'a']++;
             }
             
-            StringBuilder key = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
 
             for(int i = 0; i < 26; i++) {
                 if(chars[i] != 0) {
-                    key.append((char) i + 'a');
-                    key.append(chars[i]);
+                    sb.append((char) i + 'a');
+                    sb.append(chars[i]);
                 }
             }
-;
-            if(!resMap.containsKey(key.toString())) {
-                resMap.put(key.toString(), new ArrayList<String>());
+            String key = sb.toString();
+            if(!resMap.containsKey(key)) {
+                resMap.put(key, new ArrayList<String>());
             }
             List<String> list = resMap.get(key.toString());
             list.add(str);
-            resMap.put(key.toString(), list);
+            resMap.put(key, list);
         }
 
         List<List<String>> res = new ArrayList();
