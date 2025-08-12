@@ -25,10 +25,7 @@ class Solution {
             resMap.put(key, list);
         }
 
-        List<List<String>> res = new ArrayList();
-        for(List<String> vals : resMap.values()) {
-            res.add(vals);
-        }
-        return res;
+        return new ArrayList<>(resMap.values());
+        
     }
 }
