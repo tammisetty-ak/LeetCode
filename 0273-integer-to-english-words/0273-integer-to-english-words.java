@@ -1,7 +1,6 @@
 class Solution {
     public String numberToWords(int num) {
-        if (num == 0)
-            return "Zero";
+        if (num == 0) return "Zero";
 
         Map<Integer, String> map = Map.ofEntries(
                 Map.entry(0, "Zero"),
@@ -35,39 +34,40 @@ class Solution {
                 Map.entry(100, "Hundred"),
                 Map.entry(1000, "Thousand"),
                 Map.entry(1000000, "Million"),
-                Map.entry(1000000000, "Billion"));
-        int groupIndex = 0;
+                Map.entry(1000000000, "Billion")
+        );
+        String[] scales = {"", "Thousand", "Million", "Billion"};
 
         StringBuilder res = new StringBuilder();
-        String[] scale = { "", "Thousand", "Million", "Billion" };
-
-        while (num > 0) {
-            if (num % 1000 != 0) {
+        int gp = 0;
+        while(num > 0) {
+            if(num % 1000 != 0) {
+                StringBuilder gR = new StringBuilder();
                 int part = num % 1000;
-                StringBuilder groupVal = new StringBuilder();
 
-                if (part >= 100) {
-                    groupVal.append(map.get(part / 100)).append(" Hundred ");
-                    part = part % 100;
+                if(part >= 100) {
+                    gR.append(map.get(part / 100)).append(" Hundred ");
+                    part %= 100;
                 }
 
-                if (part >= 20) {
-                    groupVal.append(map.get((part / 10) * 10)).append(" ");
-                    part = part % 10;
+                if(part >= 20) {
+                    gR.append(map.get((part / 10) * 10)).append(" ");
+                    part %= 10;
                 }
 
-
-                if (part > 0) {
-                    groupVal.append(map.get(part)).append(" ");
+                if(part > 0) {
+                    gR.append(map.get(part)).append(" ");
                 }
-                groupVal.append(scale[groupIndex]).append(" ");
 
-                res.insert(0, groupVal);
+                gR.append(scales[gp]).append(" ");
+                res.insert(0, gR);
             }
-            num = num / 1000;
-            groupIndex++;
+            num /= 1000;
+            gp++;
         }
+
         return res.toString().trim();
+
     }
 }
 /*
