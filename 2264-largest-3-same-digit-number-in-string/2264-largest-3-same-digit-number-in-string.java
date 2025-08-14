@@ -1,19 +1,18 @@
 class Solution {
     public String largestGoodInteger(String num) {
-        int max = Integer.MIN_VALUE;
+        // Assign 'maxDigit' to the NUL character (smallest ASCII value character)
+        char maxDigit = '\0';
 
-        StringBuilder res = new StringBuilder();
-        
-        for(int i = 0; (i + 2) < num.length() ; i++) {
-            if(num.charAt(i) == num.charAt(i + 1) && num.charAt(i + 1) == num.charAt(i + 2)) {
-                if(Integer.parseInt(num.substring(i, i + 3)) > max) {
-                    res.setLength(0);
-                    res.append(num.substring(i, i + 3));
-                    max = Integer.parseInt(num.substring(i, i + 3));
-                }
+        // Iterate on characters of the num string.
+        for (int index = 0; index <= num.length() - 3; ++index) {
+            // If 3 consecutive characters are the same, 
+            // store the character in 'maxDigit' if it's bigger than what it already stores.
+            if (num.charAt(index) == num.charAt(index + 1) && num.charAt(index) == num.charAt(index + 2)) {
+                maxDigit = (char) Math.max(maxDigit, num.charAt(index));
             }
         }
 
-       return max == Integer.MIN_VALUE ? "" : res.toString();
+        // If 'maxDigit' is NUL, return an empty string; otherwise, return a string of size 3 with 'maxDigit' characters.
+        return maxDigit == '\0' ? "" : new String(new char[]{maxDigit, maxDigit, maxDigit});
     }
 }
