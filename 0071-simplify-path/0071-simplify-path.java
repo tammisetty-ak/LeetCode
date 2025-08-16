@@ -5,10 +5,13 @@ class Solution {
         String[] fileNames = path.split("/+");
 
         for (String fileName : fileNames) {
-            if (fileName.equals("..")) {
+            if(fileName.equals(".") || fileName.isEmpty()) {
+                continue;
+            }
+            else if (fileName.equals("..")) {
                 if (!stack.isEmpty())
                     stack.pop();
-            } else if (!fileName.isBlank() && !fileName.equals(".")) {
+            } else {
                 stack.push(fileName);
             }
         }
