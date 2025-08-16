@@ -1,6 +1,6 @@
 class Solution {
     public String simplifyPath(String path) {
-        Deque<String> stack = new ArrayDeque();
+        Stack<String> stack = new Stack();
 
         String[] fileNames = path.split("/+");
 
@@ -20,9 +20,9 @@ class Solution {
         }
 
         StringBuilder sb = new StringBuilder();
-        Iterator<String> it = stack.descendingIterator();
-        while (it.hasNext()) {
-            sb.append("/").append(it.next());
+        
+        for (String str: stack) {
+            sb.append("/").append(str);
         }
         return sb.toString();
 
