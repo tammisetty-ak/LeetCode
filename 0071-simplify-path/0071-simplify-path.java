@@ -6,11 +6,12 @@ class Solution {
 
         for (String fileName : fileNames) {
             if (!fileName.isBlank()) {
-                if (!fileName.equals(".") && !fileName.equals("..")) {
-                    stack.push(fileName);
-                } else if (fileName.equals("..")) {
+                if (fileName.equals("..")) {
                     if (!stack.isEmpty())
                         stack.pop();
+                }
+                else if(!fileName.equals(".")) {
+                    stack.push(fileName);
                 }
             }
         }
@@ -31,9 +32,3 @@ class Solution {
 
     }
 }
-
-// if(a||b){if(b&&c){
-
-// }}else{
-
-// }
