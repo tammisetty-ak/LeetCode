@@ -18,16 +18,12 @@ class Solution {
 
         StringBuilder res = new StringBuilder();
 
-        if (stack.isEmpty()) {
-            return "/";
-        }
-
         StringBuilder sb = new StringBuilder();
         
         for (String str: stack) {
             sb.append("/").append(str);
         }
-        return sb.toString();
+        return sb.length() > 0 ? sb.toString() : "/";
 
     }
 }
