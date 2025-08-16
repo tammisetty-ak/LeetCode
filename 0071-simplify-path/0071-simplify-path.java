@@ -1,34 +1,30 @@
 class Solution {
     public String simplifyPath(String path) {
-        Stack<String> stack = new Stack();
+        Deque<String> stack = new ArrayDeque();
 
         String[] fileNames = path.split("/+");
 
         for (String fileName : fileNames) {
-            if (!fileName.isBlank()) {
-                if (fileName.equals("..")) {
-                    if (!stack.isEmpty())
-                        stack.pop();
-                }
-                else if(!fileName.equals(".")) {
-                    stack.push(fileName);
-                }
+            if (fileName.equals("..")) {
+                if (!stack.isEmpty())
+                    stack.pop();
+            } else if (!fileName.isBlank() && !fileName.equals(".")) {
+                stack.push(fileName);
             }
         }
 
         StringBuilder res = new StringBuilder();
 
-        if(stack.isEmpty()) {
+        if (stack.isEmpty()) {
             return "/";
         }
 
-        while (!stack.isEmpty()) {
-            System.out.println(stack.peek());
-            res.insert(0, stack.pop());
-            res.insert(0, "/");
+        StringBuilder sb = new StringBuilder();
+        Iterator<String> it = stack.descendingIterator();
+        while (it.hasNext()) {
+            sb.append("/").append(it.next());
         }
-
-        return res.toString();
+        return sb.toString();
 
     }
 }
