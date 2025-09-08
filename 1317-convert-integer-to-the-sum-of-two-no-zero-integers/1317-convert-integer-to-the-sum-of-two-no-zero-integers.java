@@ -13,6 +13,6 @@ class Solution {
     }
 
     private boolean hasZero(int n) {
-        return String.valueOf(n).indexOf('0') != -1;
+        return String.valueOf(n).contains("0");
     }
 }
