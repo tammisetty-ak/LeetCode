@@ -1,27 +1,23 @@
-import java.util.StringTokenizer;
 class Solution {
     public int canBeTypedWords(String text, String brokenLetters) {
-        StringTokenizer st = new StringTokenizer(text, " ");
-        int count = 0;
+        // Store broken letters in a boolean array for O(1) lookup
+        boolean[] broken = new boolean[26];
+        for (char c : brokenLetters.toCharArray()) {
+            broken[c - 'a'] = true;
+        }
 
-        while(st.hasMoreTokens()) {
-            String curr = st.nextToken();
-            boolean broken = false;
-            for(char c : brokenLetters.toCharArray()) {
-                if(curr.indexOf(c) == -1) {
-                    continue;
-                }
-                else {
-                    broken = true;
+        int count = 0;
+        for (String word : text.split(" ")) {
+            boolean valid = true;
+            for (char c : word.toCharArray()) {
+                if (broken[c - 'a']) {
+                    valid = false;
                     break;
                 }
             }
-            if(!broken) {
-                count++;
-            }
+            if (valid) count++;
         }
 
         return count;
-
     }
 }
