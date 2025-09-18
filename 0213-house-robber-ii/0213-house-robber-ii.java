@@ -1,39 +1,27 @@
 class Solution {
 
-    private int findMaxRobbedAmount(int[] nums){
-        int N = nums.length;
-
-        int maxRobbedAmount[] = new int[N + 1];
-
-        maxRobbedAmount[N] = 0;
-        maxRobbedAmount[N-1] = nums[N - 1];
-
-        for(int i = N - 2; i >= 0; --i) {
-            maxRobbedAmount[i] = Math.max(maxRobbedAmount[i+1], maxRobbedAmount[i+2] + nums[i]);
+    private int findMaxRobbedAmount(int[] nums, int start, int end) {
+        // Calculate the number of houses in the subarray
+        int n = end - start;
+        // Create dp array with extra space to avoid index out-of-bound checks
+        int[] dp = new int[n + 2];
+        
+        // Fill dp array from the end of the subarray
+        for (int i = n - 1; i >= 0; i--) {
+            dp[i] = Math.max(dp[i + 1], dp[i + 2] + nums[start + i]);
         }
-
-        return maxRobbedAmount[0];
+        return dp[0];
     }
 
     public int rob(int[] nums) {
-
-        if (nums.length == 1) {
+        int n = nums.length;
+        if (n == 1) {
             return nums[0];
         }
-        
-        int[] oneToLastButOne = new int[nums.length - 1];
-
-        for(int i = 0; i < nums.length - 1; i++) {
-            oneToLastButOne[i] = nums[i];
-        }
-
-        int[] twoToLast = new int[nums.length - 1];
-
-        for(int i = 1; i < nums.length; i++) {
-            twoToLast[i - 1] = nums[i];
-        }
-        return Math.max(findMaxRobbedAmount(oneToLastButOne), findMaxRobbedAmount(twoToLast));
-
-        
+        // Compute the maximum robbed amount by excluding the last house and excluding the first house
+        return Math.max(
+            findMaxRobbedAmount(nums, 0, n - 1),  // Consider houses 0 to n-2
+            findMaxRobbedAmount(nums, 1, n)       // Consider houses 1 to n-1
+        );
     }
 }
