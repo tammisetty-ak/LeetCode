@@ -2,19 +2,12 @@ class Solution {
     public int rob(int[] nums) {
         int N = nums.length;
 
-        if(N == 0) {
-            return 0;
+        int[] dp = new int[N + 2];
+
+        for(int i = N - 1; i >= 0; --i) {
+            dp[i] = Math.max(dp[i+1], dp[i+2] + nums[i]);
         }
 
-        int[] maxRobbedAmount = new int[N + 1];
-
-        maxRobbedAmount[N] = 0;
-        maxRobbedAmount[N-1] = nums[N-1];
-
-        for(int i = N - 2; i >= 0; --i) {
-            maxRobbedAmount[i] = Math.max(maxRobbedAmount[i + 1], maxRobbedAmount[i + 2] + nums[i]);
-        }
-            return maxRobbedAmount[0];
-
+        return dp[0];
     }
 }
